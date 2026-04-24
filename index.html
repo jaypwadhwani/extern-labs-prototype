@@ -1,0 +1,1975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extern — Career Explorer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #5567D5;
+      --primary-50: #EEEFFE;
+      --primary-100: #D8DCFA;
+      --primary-200: #B3BBEF;
+      --surface: #FFFFFF;
+      --bg: #F2F3FA;
+      --text-900: #0F0F1A;
+      --text-700: #374151;
+      --text-500: #6B7280;
+      --text-300: #9CA3AF;
+      --border: #E5E7EB;
+      --border-strong: #D1D5DB;
+      --radius: 12px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 1px 2px rgba(0,0,0,0.06);
+      --shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -1px rgba(0,0,0,0.04);
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text-700);
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-size: 14px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── Layout ─── */
+    .app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+
+    .trial-banner {
+      background: var(--primary-50);
+      border-bottom: 1px solid var(--primary-100);
+      padding: 9px 24px;
+      text-align: center;
+      font-size: 12.5px;
+      color: var(--primary);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+
+    .main-layout {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    /* ─── Sidebar ─── */
+    .sidebar {
+      width: 216px;
+      min-width: 216px;
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 16px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+
+    .sidebar-logo {
+      padding: 6px 10px 18px;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .logo-mark {
+      width: 30px;
+      height: 30px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-900);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 10px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-500);
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .nav-item:hover { background: var(--bg); color: var(--text-700); }
+    .nav-item.active { background: var(--primary-50); color: var(--primary); font-weight: 600; }
+
+    .nav-icon { width: 17px; height: 17px; flex-shrink: 0; }
+
+    /* ─── Content area ─── */
+    .content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+
+    .screen { display: none; flex: 1; flex-direction: column; }
+    .screen.active { display: flex; }
+
+    /* ─── Catalog Header ─── */
+    .catalog-header {
+      background: var(--primary-50);
+      border-bottom: 1px solid var(--primary-100);
+      padding: 22px 32px;
+      flex-shrink: 0;
+    }
+
+    .catalog-header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text-900);
+      margin-bottom: 5px;
+      letter-spacing: -0.02em;
+    }
+
+    .catalog-header p { font-size: 13.5px; color: var(--text-500); }
+
+    .catalog-body { padding: 26px 32px; flex: 1; }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-300);
+      margin-bottom: 14px;
+    }
+
+    /* ─── Career Cards ─── */
+    .career-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+
+    .career-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .career-card.playable:hover {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px var(--primary-50), var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .career-card.coming-soon {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .career-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 14px;
+    }
+
+    .career-card-title {
+      font-size: 14.5px;
+      font-weight: 700;
+      color: var(--text-900);
+      margin-bottom: 5px;
+      letter-spacing: -0.01em;
+    }
+
+    .career-duration {
+      font-size: 12px;
+      color: var(--text-300);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 16px; }
+
+    .tag {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 8px;
+      border-radius: 100px;
+    }
+
+    .tag-blue   { background: #DBEAFE; color: #1D4ED8; }
+    .tag-purple { background: #EDE9FF; color: #6D28D9; }
+    .tag-pink   { background: #FCE7F3; color: #9D174D; }
+    .tag-green  { background: #D1FAE5; color: #065F46; }
+    .tag-orange { background: #FEF3C7; color: #92400E; }
+    .tag-teal   { background: #CCFBF1; color: #0F766E; }
+
+    .try-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--primary);
+      background: var(--primary-50);
+      border: none;
+      padding: 7px 13px;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: background 0.15s;
+      font-family: inherit;
+    }
+
+    .try-btn:hover { background: var(--primary-100); }
+
+    .coming-soon-pill {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--bg);
+      color: var(--text-300);
+      border: 1px solid var(--border);
+      padding: 3px 10px;
+      border-radius: 100px;
+    }
+
+    /* ─── Simulation Chrome ─── */
+    .sim-header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+
+    .sim-header-left { display: flex; align-items: center; gap: 14px; }
+
+    .back-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 13px;
+      color: var(--text-500);
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 6px 0;
+      transition: color 0.15s;
+      font-family: inherit;
+    }
+    .back-btn:hover { color: var(--text-900); }
+
+    .divider-v { width: 1px; height: 20px; background: var(--border); }
+
+    .sim-title-block .sim-title { font-size: 13.5px; font-weight: 600; color: var(--text-900); }
+    .sim-title-block .sim-role  { font-size: 12px; color: var(--text-500); margin-top: 1px; }
+
+    .progress-section { text-align: right; min-width: 240px; }
+    .progress-meta { font-size: 11px; color: var(--text-300); margin-bottom: 5px; display: flex; justify-content: space-between; }
+
+    .progress-track {
+      height: 5px;
+      background: var(--border);
+      border-radius: 100px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary);
+      border-radius: 100px;
+      transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .sim-body { flex: 1; overflow-y: auto; padding: 28px 32px; }
+
+    /* ─── Intro Screen ─── */
+    .intro-layout {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 22px;
+      max-width: 1000px;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      background: var(--primary-50);
+      color: var(--primary);
+      padding: 5px 12px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+
+    .intro-heading {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-900);
+      line-height: 1.3;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .intro-sub {
+      font-size: 13.5px;
+      color: var(--text-500);
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
+
+    /* ─── Slack Component ─── */
+    .slack-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-bottom: 22px;
+    }
+
+    .slack-header { display: flex; align-items: center; gap: 11px; margin-bottom: 14px; }
+
+    .avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .avatar-name { font-size: 13.5px; font-weight: 600; color: var(--text-900); }
+    .avatar-meta { font-size: 11.5px; color: var(--text-300); }
+
+    .slack-body { font-size: 14px; line-height: 1.75; color: var(--text-700); }
+    .slack-body p + p { margin-top: 10px; }
+
+    /* ─── Context Card ─── */
+    .context-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 18px;
+    }
+
+    .context-card-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+      color: var(--text-300);
+      margin-bottom: 14px;
+    }
+
+    .ctx-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--bg);
+    }
+    .ctx-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .ctx-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 7px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .ctx-label { font-size: 11.5px; color: var(--text-500); margin-bottom: 2px; }
+    .ctx-value { font-size: 13px; font-weight: 600; color: var(--text-900); }
+    .ctx-value.down { color: #EF4444; }
+
+    /* ─── Buttons ─── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: inherit;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #4455C0;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(85,103,213,0.35);
+    }
+
+    .btn-primary:disabled {
+      background: var(--text-300);
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* ─── Decision Layout ─── */
+    .decision-layout {
+      display: grid;
+      grid-template-columns: 1fr 280px;
+      gap: 22px;
+      max-width: 1000px;
+      animation: fadeUp 0.3s ease;
+    }
+
+    .question-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 26px;
+    }
+
+    .step-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .question-title {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--text-900);
+      line-height: 1.35;
+      letter-spacing: -0.02em;
+      margin-bottom: 6px;
+    }
+
+    .question-context {
+      font-size: 13px;
+      color: var(--text-500);
+      line-height: 1.65;
+      margin-bottom: 22px;
+    }
+
+    /* ─── Options ─── */
+    .options { display: flex; flex-direction: column; gap: 9px; margin-bottom: 22px; }
+
+    .option {
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+    }
+
+    .option:hover {
+      border-color: var(--primary-200);
+      background: var(--primary-50);
+    }
+
+    .option.selected {
+      border-color: var(--primary);
+      background: var(--primary-50);
+    }
+
+    .opt-letter {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1.5px solid var(--border-strong);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-500);
+      flex-shrink: 0;
+      transition: all 0.15s;
+    }
+
+    .option.selected .opt-letter {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
+
+    .opt-body { flex: 1; }
+    .opt-title { font-size: 13.5px; font-weight: 600; color: var(--text-900); margin-bottom: 3px; }
+    .opt-detail { font-size: 12.5px; color: var(--text-500); line-height: 1.5; }
+
+    /* ─── Mini Task ─── */
+    .feedback-stack { display: flex; flex-direction: column; gap: 9px; margin-bottom: 22px; }
+
+    .feedback-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 13px 16px;
+      display: flex;
+      gap: 11px;
+      align-items: flex-start;
+    }
+
+    .user-dot {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: white;
+      flex-shrink: 0;
+    }
+
+    .feedback-name { font-size: 11.5px; font-weight: 600; color: var(--text-500); margin-bottom: 3px; }
+    .feedback-quote { font-size: 13px; color: var(--text-700); line-height: 1.55; }
+
+    /* ─── Right Context Panel (Sim) ─── */
+    .sim-context-panel { display: flex; flex-direction: column; gap: 14px; }
+
+    .insight-chip {
+      background: var(--primary-50);
+      border: 1px solid var(--primary-100);
+      border-radius: 10px;
+      padding: 14px 16px;
+    }
+
+    .insight-chip-label {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .insight-chip-text {
+      font-size: 12.5px;
+      color: var(--text-700);
+      line-height: 1.55;
+    }
+
+    /* ─── Results ─── */
+    .results-layout { max-width: 860px; animation: fadeUp 0.3s ease; }
+
+    .results-hero {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .score-ring-wrap { position: relative; width: 110px; height: 110px; margin: 0 auto 18px; }
+
+    .score-ring-wrap svg { position: absolute; top: 0; left: 0; transform: rotate(-90deg); }
+
+    .score-center {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      text-align: center;
+    }
+
+    .score-number {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--text-900);
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+
+    .score-denom { font-size: 13px; color: var(--text-300); font-weight: 500; }
+
+    .results-headline {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-900);
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .results-tagline {
+      font-size: 14px;
+      color: var(--text-500);
+      max-width: 480px;
+      margin: 0 auto 26px;
+      line-height: 1.6;
+    }
+
+    .dim-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; max-width: 580px; margin: 0 auto; }
+
+    .dim-item {}
+    .dim-labels { display: flex; justify-content: space-between; font-size: 11.5px; margin-bottom: 5px; }
+    .dim-name { font-weight: 600; color: var(--text-700); }
+    .dim-score { color: var(--primary); font-weight: 600; }
+    .dim-track { height: 7px; background: var(--bg); border-radius: 100px; overflow: hidden; }
+    .dim-bar { height: 100%; background: var(--primary); border-radius: 100px; width: 0; transition: width 1.2s cubic-bezier(0.4,0,0.2,1); }
+
+    .results-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+
+    .results-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+    }
+
+    .rc-title {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-900);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .rc-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+
+    .rc-list li {
+      display: flex;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--text-700);
+      line-height: 1.5;
+      align-items: flex-start;
+    }
+
+    .rc-list li span { flex-shrink: 0; margin-top: 1px; }
+
+    .resume-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      margin-bottom: 16px;
+    }
+
+    .resume-label {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: var(--text-900);
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .resume-sub { font-size: 12px; color: var(--text-500); margin-bottom: 14px; }
+
+    .resume-bullet {
+      background: #F8F9FF;
+      border: 1px solid var(--primary-100);
+      border-left: 3px solid var(--primary);
+      border-radius: 0 8px 8px 0;
+      padding: 13px 16px;
+      font-size: 13.5px;
+      color: var(--text-900);
+      line-height: 1.65;
+    }
+
+    /* ─── CTA Card ─── */
+    .cta-card {
+      background: var(--surface);
+      border: 1.5px solid var(--primary-100);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+
+    .cta-top {
+      background: linear-gradient(135deg, var(--primary-50) 0%, #E8EBF8 100%);
+      padding: 18px 24px;
+      border-bottom: 1px solid var(--primary-100);
+    }
+
+    .cta-eyebrow {
+      font-size: 10.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 5px;
+    }
+
+    .cta-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-900);
+      letter-spacing: -0.02em;
+      margin-bottom: 3px;
+    }
+
+    .cta-sub { font-size: 12.5px; color: var(--text-500); }
+
+    .cta-bottom {
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .cta-details { flex: 1; display: flex; gap: 20px; flex-wrap: wrap; }
+
+    .cta-detail {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: 12.5px;
+      color: var(--text-500);
+    }
+
+    .cta-detail strong { color: var(--text-700); font-weight: 600; }
+
+    .cta-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--primary);
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 9px;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.15s;
+      white-space: nowrap;
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+    }
+
+    .cta-link:hover {
+      background: #4455C0;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(85,103,213,0.35);
+    }
+
+    /* ─── Animations ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes countUp {
+      from { opacity: 0; transform: scale(0.8); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    /* ─── Scrollbar ─── */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+    /* ─── Shared util ─── */
+    .mt8 { margin-top: 8px; }
+    .mt4 { margin-top: 4px; }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- Trial Banner -->
+  <div class="trial-banner">
+    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+      <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+    </svg>
+    7 days left in your free trial.
+  </div>
+
+  <div class="main-layout">
+
+    <!-- ═══ Sidebar ═══ -->
+    <nav class="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo-mark">
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+        </div>
+        <span class="logo-text">Extern</span>
+      </div>
+
+      <button class="nav-item" onclick="goTo('catalog')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/>
+          <rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/>
+        </svg>
+        Externship Catalog
+      </button>
+
+      <button class="nav-item">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+        </svg>
+        Sprint Catalog
+      </button>
+
+      <button class="nav-item">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+        </svg>
+        Bookmarks
+      </button>
+
+      <button class="nav-item">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"/>
+        </svg>
+        My Programs
+      </button>
+
+      <button class="nav-item active" id="nav-explorer" onclick="goTo('catalog')">
+        <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+          <circle cx="12" cy="12" r="10"/>
+          <path stroke-linecap="round" stroke-linejoin="round" d="M16.24 7.76l-2.12 6.36-6.36 2.12 2.12-6.36 6.36-2.12z"/>
+        </svg>
+        Career Explorer
+      </button>
+    </nav>
+
+    <!-- ═══ Main Content ═══ -->
+    <main class="content">
+
+      <!-- ══════════════════════════════
+           SCREEN 1: Career Catalog
+           ══════════════════════════════ -->
+      <div id="s-catalog" class="screen active">
+        <div class="catalog-header">
+          <h1>Career Explorer</h1>
+          <p>Try a real day-in-the-life before you commit. 12 minutes. No experience required.</p>
+        </div>
+        <div class="catalog-body">
+          <p class="section-label">Available Now</p>
+          <div class="career-grid">
+
+            <!-- PM — Active -->
+            <div class="career-card playable" onclick="goTo('intro')">
+              <div class="career-icon" style="background:#EEF0FB; color:#5567D5;">
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"/>
+                </svg>
+              </div>
+              <div class="career-card-title">Product Manager</div>
+              <div class="career-duration">
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                12 min simulation
+              </div>
+              <div class="tags">
+                <span class="tag tag-blue">Strategy</span>
+                <span class="tag tag-purple">User Research</span>
+                <span class="tag tag-teal">Prioritization</span>
+              </div>
+              <button class="try-btn">
+                Try Now
+                <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+              </button>
+            </div>
+
+            <!-- Marketing — Soon -->
+            <div class="career-card coming-soon">
+              <div class="career-icon" style="background:#FEF3C7; color:#D97706;">
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"/>
+                </svg>
+              </div>
+              <div class="career-card-title">Marketing Strategist</div>
+              <div class="career-duration">
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                ~14 min simulation
+              </div>
+              <div class="tags">
+                <span class="tag tag-orange">Brand Strategy</span>
+                <span class="tag tag-pink">Content</span>
+              </div>
+              <span class="coming-soon-pill">Coming Soon</span>
+            </div>
+
+            <!-- VC — Soon -->
+            <div class="career-card coming-soon">
+              <div class="career-icon" style="background:#D1FAE5; color:#059669;">
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                </svg>
+              </div>
+              <div class="career-card-title">VC Analyst</div>
+              <div class="career-duration">
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                ~15 min simulation
+              </div>
+              <div class="tags">
+                <span class="tag tag-green">Deal Sourcing</span>
+                <span class="tag tag-blue">Analysis</span>
+              </div>
+              <span class="coming-soon-pill">Coming Soon</span>
+            </div>
+
+            <!-- Data Analyst — Soon -->
+            <div class="career-card coming-soon">
+              <div class="career-icon" style="background:#FCE7F3; color:#BE185D;">
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                </svg>
+              </div>
+              <div class="career-card-title">Data Analyst</div>
+              <div class="career-duration">
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                ~13 min simulation
+              </div>
+              <div class="tags">
+                <span class="tag tag-pink">SQL</span>
+                <span class="tag tag-purple">Visualization</span>
+              </div>
+              <span class="coming-soon-pill">Coming Soon</span>
+            </div>
+
+            <!-- Consulting — Soon -->
+            <div class="career-card coming-soon">
+              <div class="career-icon" style="background:#EDE9FF; color:#7C3AED;">
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+              </div>
+              <div class="career-card-title">Consultant</div>
+              <div class="career-duration">
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                ~14 min simulation
+              </div>
+              <div class="tags">
+                <span class="tag tag-orange">Problem-Solving</span>
+                <span class="tag tag-green">Strategy</span>
+              </div>
+              <span class="coming-soon-pill">Coming Soon</span>
+            </div>
+
+            <!-- UX Researcher — Soon -->
+            <div class="career-card coming-soon">
+              <div class="career-icon" style="background:#CCFBF1; color:#0F766E;">
+                <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+                </svg>
+              </div>
+              <div class="career-card-title">UX Researcher</div>
+              <div class="career-duration">
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                  <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                </svg>
+                ~12 min simulation
+              </div>
+              <div class="tags">
+                <span class="tag tag-teal">User Interviews</span>
+                <span class="tag tag-blue">Synthesis</span>
+              </div>
+              <span class="coming-soon-pill">Coming Soon</span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           SCREEN 2: Intro / Scenario
+           ══════════════════════════════ -->
+      <div id="s-intro" class="screen">
+        <div class="sim-header">
+          <div class="sim-header-left">
+            <button class="back-btn" onclick="goTo('catalog')">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+              </svg>
+              Career Explorer
+            </button>
+            <div class="divider-v"></div>
+            <div class="sim-title-block">
+              <div class="sim-title">Product Manager</div>
+              <div class="sim-role">Day-in-the-Life Simulation</div>
+            </div>
+          </div>
+          <div class="progress-section">
+            <div class="progress-meta">
+              <span>Setting the Scene</span>
+              <span id="prog-label-intro">Step 1 of 6</span>
+            </div>
+            <div class="progress-track">
+              <div class="progress-fill" id="prog-intro" style="width:8%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="sim-body">
+          <div class="intro-layout">
+            <div>
+              <div class="role-badge">
+                <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                </svg>
+                Junior Product Manager &nbsp;·&nbsp; Meridian &nbsp;·&nbsp; Day 3
+              </div>
+              <h2 class="intro-heading">Your first real problem just landed.</h2>
+              <p class="intro-sub">You're a junior PM at Meridian — a project management SaaS used by 50,000 teams. Three days in, and your manager just messaged you with a live issue.</p>
+
+              <div class="slack-card">
+                <div class="slack-header">
+                  <div class="avatar" style="background:#7C3AED;">PS</div>
+                  <div>
+                    <div class="avatar-name">Priya Singh &nbsp;<span style="font-weight:400;color:var(--text-300);font-size:11.5px;">Product Lead</span></div>
+                    <div class="avatar-meta">Today at 9:14 AM · via Slack</div>
+                  </div>
+                </div>
+                <div class="slack-body">
+                  <p>Hey — quick heads up before standup. Our activation rate dropped 12% this quarter. New users are signing up but something's blocking them from completing setup.</p>
+                  <p>I need you to own this. Stakeholder review is in 2 weeks. Figure out what's happening and come back with a recommendation.</p>
+                  <p>Where do you want to start? 👀</p>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" onclick="goTo('dp1'); setProgress(20,'Step 2 of 6')">
+                I'm ready — let's start
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+              </button>
+            </div>
+
+            <div>
+              <div class="context-card">
+                <div class="context-card-label">Your Situation</div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#FEE2E2;">📉</div>
+                  <div>
+                    <div class="ctx-label">Activation Rate</div>
+                    <div class="ctx-value down">↓ 12% this quarter</div>
+                  </div>
+                </div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#DBEAFE;">👥</div>
+                  <div>
+                    <div class="ctx-label">Active Teams</div>
+                    <div class="ctx-value">50,000 teams</div>
+                  </div>
+                </div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#D1FAE5;">🗓</div>
+                  <div>
+                    <div class="ctx-label">Stakeholder Review</div>
+                    <div class="ctx-value">2 weeks away</div>
+                  </div>
+                </div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#EDE9FF;">⚙️</div>
+                  <div>
+                    <div class="ctx-label">Engineering Capacity</div>
+                    <div class="ctx-value">1 sprint free</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           SCREEN 3: Decision Point 1
+           ══════════════════════════════ -->
+      <div id="s-dp1" class="screen">
+        <div class="sim-header">
+          <div class="sim-header-left">
+            <button class="back-btn" onclick="goTo('intro')">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+              </svg>
+              Back
+            </button>
+            <div class="divider-v"></div>
+            <div class="sim-title-block">
+              <div class="sim-title">Product Manager · Decision 1</div>
+              <div class="sim-role">Where do you start?</div>
+            </div>
+          </div>
+          <div class="progress-section">
+            <div class="progress-meta"><span id="prog-step-dp1">Step 2 of 6</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:20%"></div></div>
+          </div>
+        </div>
+        <div class="sim-body">
+          <div class="decision-layout">
+            <div class="question-card">
+              <div class="step-eyebrow">Decision 1 of 4</div>
+              <div class="question-title">Your manager needs a response. Where do you start?</div>
+              <div class="question-context">Activation dropped 12% this quarter. New sign-ups aren't completing setup. You have 2 weeks until stakeholder review and 1 sprint of engineering time. What's your first move?</div>
+
+              <div class="options" id="opts-dp1">
+                <div class="option" id="opt-dp1-A" onclick="pick('dp1','A')">
+                  <div class="opt-letter">A</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Talk to users first</div>
+                    <div class="opt-detail">Schedule 5 interviews with people who signed up recently but never completed setup.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp1-B" onclick="pick('dp1','B')">
+                  <div class="opt-letter">B</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Pull the analytics first</div>
+                    <div class="opt-detail">Find exactly where in the onboarding funnel users are dropping off before doing anything else.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp1-C" onclick="pick('dp1','C')">
+                  <div class="opt-letter">C</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Benchmark competitors</div>
+                    <div class="opt-detail">See how similar tools handle onboarding — could surface quick ideas.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp1-D" onclick="pick('dp1','D')">
+                  <div class="opt-letter">D</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Write a hypothesis first</div>
+                    <div class="opt-detail">Document your best guess about what's happening before touching any data.</div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" id="next-dp1" disabled onclick="advance('dp1','task')">
+                Confirm &amp; continue
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="sim-context-panel">
+              <div class="context-card">
+                <div class="context-card-label">The Problem</div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#FEE2E2;">📉</div>
+                  <div>
+                    <div class="ctx-label">Activation Rate</div>
+                    <div class="ctx-value down">↓ 12% this quarter</div>
+                  </div>
+                </div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#D1FAE5;">🗓</div>
+                  <div>
+                    <div class="ctx-label">Deadline</div>
+                    <div class="ctx-value">2 weeks</div>
+                  </div>
+                </div>
+              </div>
+              <div class="insight-chip">
+                <div class="insight-chip-label">💡 PM Tip</div>
+                <div class="insight-chip-text">Real PMs diagnose before they prescribe. The question isn't just "what's wrong" — it's "what do I need to know first to make the best next decision?"</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           SCREEN 4: Mini Task
+           ══════════════════════════════ -->
+      <div id="s-task" class="screen">
+        <div class="sim-header">
+          <div class="sim-header-left">
+            <button class="back-btn" onclick="goTo('dp1')">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+              </svg>
+              Back
+            </button>
+            <div class="divider-v"></div>
+            <div class="sim-title-block">
+              <div class="sim-title">Product Manager · Deep Dive</div>
+              <div class="sim-role">Synthesize the user feedback</div>
+            </div>
+          </div>
+          <div class="progress-section">
+            <div class="progress-meta"><span>Step 3 of 6</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:38%"></div></div>
+          </div>
+        </div>
+        <div class="sim-body">
+          <div class="decision-layout">
+            <div>
+              <div class="question-card" style="margin-bottom:16px;">
+                <div class="step-eyebrow">Mini Task — User Research Synthesis</div>
+                <div class="question-title">The data shows 68% of users drop off at "Invite Your Team."</div>
+                <div class="question-context">You pulled the funnel analytics. The drop-off is concentrated at one step. Now you read the latest user feedback from churned sign-ups. Read all five, then identify the most important insight.</div>
+              </div>
+
+              <div class="feedback-stack">
+                <div class="feedback-item">
+                  <div class="user-dot" style="background:#6366F1;">TK</div>
+                  <div>
+                    <div class="feedback-name">Taylor K. &nbsp;·&nbsp; Signed up 12 days ago</div>
+                    <div class="feedback-quote">"The onboarding tutorial moved too fast. I couldn't keep up and eventually just gave up."</div>
+                  </div>
+                </div>
+                <div class="feedback-item">
+                  <div class="user-dot" style="background:#EC4899;">MJ</div>
+                  <div>
+                    <div class="feedback-name">Morgan J. &nbsp;·&nbsp; Signed up 8 days ago</div>
+                    <div class="feedback-quote">"Super confusing when I first logged in. Way too many options and I had no idea where to start."</div>
+                  </div>
+                </div>
+                <div class="feedback-item" style="border-color:#B3BBEF; background:#F8F9FF;">
+                  <div class="user-dot" style="background:#5567D5;">AR</div>
+                  <div>
+                    <div class="feedback-name">Alex R. &nbsp;·&nbsp; Signed up 5 days ago</div>
+                    <div class="feedback-quote">"I signed up thinking I could get started right away, but it turns out my company already has a Meridian workspace and I need my admin to add me. I had no way of knowing that when I signed up."</div>
+                  </div>
+                </div>
+                <div class="feedback-item">
+                  <div class="user-dot" style="background:#10B981;">SL</div>
+                  <div>
+                    <div class="feedback-name">Sam L. &nbsp;·&nbsp; Signed up 18 days ago</div>
+                    <div class="feedback-quote">"Everything was fine but the confirmation email took forever to arrive. I almost gave up."</div>
+                  </div>
+                </div>
+                <div class="feedback-item">
+                  <div class="user-dot" style="background:#F59E0B;">PE</div>
+                  <div>
+                    <div class="feedback-name">Parker E. &nbsp;·&nbsp; Signed up 3 days ago</div>
+                    <div class="feedback-quote">"The interface looked great but the 'Invite Your Team' step felt way too early. I just wanted to explore first."</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="question-card">
+                <div class="step-eyebrow">Your analysis</div>
+                <div class="question-title" style="font-size:15px;">Which insight best explains the 68% drop-off at "Invite Your Team"?</div>
+                <div class="question-context" style="margin-bottom:18px;">You're looking for the structural reason, not the surface complaint.</div>
+
+                <div class="options" id="opts-task">
+                  <div class="option" id="opt-task-A" onclick="pick('task','A')">
+                    <div class="opt-letter">A</div>
+                    <div class="opt-body">
+                      <div class="opt-title">The tutorial moves too fast</div>
+                      <div class="opt-detail">Users lose confidence early and don't make it to team setup.</div>
+                    </div>
+                  </div>
+                  <div class="option" id="opt-task-B" onclick="pick('task','B')">
+                    <div class="opt-letter">B</div>
+                    <div class="opt-body">
+                      <div class="opt-title">The interface is too overwhelming</div>
+                      <div class="opt-detail">Too many options on first login causes users to drop before completing setup.</div>
+                    </div>
+                  </div>
+                  <div class="option" id="opt-task-C" onclick="pick('task','C')">
+                    <div class="opt-letter">C</div>
+                    <div class="opt-body">
+                      <div class="opt-title">Users don't realize they need admin access</div>
+                      <div class="opt-detail">Most new sign-ups can't complete workspace setup — they need an existing admin to invite them first.</div>
+                    </div>
+                  </div>
+                  <div class="option" id="opt-task-D" onclick="pick('task','D')">
+                    <div class="opt-letter">D</div>
+                    <div class="opt-body">
+                      <div class="opt-title">Team setup is too early in the flow</div>
+                      <div class="opt-detail">The "Invite Your Team" step should come later, after users have explored the product.</div>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="btn btn-primary mt8" id="next-task" disabled onclick="advance('task','dp2')">
+                  Confirm &amp; continue
+                  <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <div class="sim-context-panel">
+              <div class="context-card">
+                <div class="context-card-label">What You Know</div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#FEE2E2;">📊</div>
+                  <div>
+                    <div class="ctx-label">Drop-off Point</div>
+                    <div class="ctx-value">"Invite Your Team" step</div>
+                  </div>
+                </div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#FEF3C7;">📉</div>
+                  <div>
+                    <div class="ctx-label">Drop-off Rate</div>
+                    <div class="ctx-value down">68% of new users</div>
+                  </div>
+                </div>
+              </div>
+              <div class="insight-chip">
+                <div class="insight-chip-label">💡 PM Tip</div>
+                <div class="insight-chip-text">The best insight isn't the loudest complaint — it's the one that explains why a specific step in the funnel breaks. Ask: which of these causes people to stop at exactly this point?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           SCREEN 5: Decision Point 2
+           ══════════════════════════════ -->
+      <div id="s-dp2" class="screen">
+        <div class="sim-header">
+          <div class="sim-header-left">
+            <button class="back-btn" onclick="goTo('task')">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+              </svg>
+              Back
+            </button>
+            <div class="divider-v"></div>
+            <div class="sim-title-block">
+              <div class="sim-title">Product Manager · Decision 2</div>
+              <div class="sim-role">What do you build?</div>
+            </div>
+          </div>
+          <div class="progress-section">
+            <div class="progress-meta"><span>Step 4 of 6</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:55%"></div></div>
+          </div>
+        </div>
+        <div class="sim-body">
+          <div class="decision-layout">
+            <div class="question-card">
+              <div class="step-eyebrow">Decision 2 of 4 — Prioritization</div>
+              <div class="question-title">Hypothesis confirmed. Engineering has 1 sprint. What do you ship?</div>
+              <div class="question-context">The data and user feedback align: most new sign-ups aren't workspace admins. They hit "Invite Your Team," realize they can't proceed, and leave. You have one sprint. What's your recommendation?</div>
+
+              <div class="options" id="opts-dp2">
+                <div class="option" id="opt-dp2-A" onclick="pick('dp2','A')">
+                  <div class="opt-letter">A</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Rebuild the onboarding flow end-to-end</div>
+                    <div class="opt-detail">Design a completely separate onboarding path for non-admin users. Estimated: 6 weeks.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp2-B" onclick="pick('dp2','B')">
+                  <div class="opt-letter">B</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Add a callout at signup explaining admin requirements</div>
+                    <div class="opt-detail">Surface a clear message early: "Your company may already have a workspace. Check with your IT admin." Estimated: 3 days.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp2-C" onclick="pick('dp2','C')">
+                  <div class="opt-letter">C</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Survey 100 more users to validate first</div>
+                    <div class="opt-detail">Run a targeted survey before touching the product to confirm this is the root cause. Estimated: 1 week.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp2-D" onclick="pick('dp2','D')">
+                  <div class="opt-letter">D</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Build an email drip for non-admin users</div>
+                    <div class="opt-detail">Auto-detect when a sign-up is likely non-admin and send a guide email while they wait for access. Estimated: 2 weeks.</div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" id="next-dp2" disabled onclick="advance('dp2','dp3')">
+                Confirm &amp; continue
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="sim-context-panel">
+              <div class="context-card">
+                <div class="context-card-label">Your Constraints</div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#EDE9FF;">⚙️</div>
+                  <div>
+                    <div class="ctx-label">Eng Capacity</div>
+                    <div class="ctx-value">1 sprint</div>
+                  </div>
+                </div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#D1FAE5;">🗓</div>
+                  <div>
+                    <div class="ctx-label">Time to Review</div>
+                    <div class="ctx-value">10 days left</div>
+                  </div>
+                </div>
+              </div>
+              <div class="insight-chip">
+                <div class="insight-chip-label">💡 PM Tip</div>
+                <div class="insight-chip-text">The best PM decision isn't always the biggest fix — it's the highest-ROI bet for the time you have. Ask: what's the minimum change that tests the hypothesis and moves the metric?</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           SCREEN 6: Decision Point 3
+           ══════════════════════════════ -->
+      <div id="s-dp3" class="screen">
+        <div class="sim-header">
+          <div class="sim-header-left">
+            <button class="back-btn" onclick="goTo('dp2')">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+              </svg>
+              Back
+            </button>
+            <div class="divider-v"></div>
+            <div class="sim-title-block">
+              <div class="sim-title">Product Manager · Decision 3</div>
+              <div class="sim-role">What's next?</div>
+            </div>
+          </div>
+          <div class="progress-section">
+            <div class="progress-meta"><span>Step 5 of 6</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:72%"></div></div>
+          </div>
+        </div>
+        <div class="sim-body">
+          <div class="decision-layout">
+            <div class="question-card">
+              <div class="step-eyebrow">Decision 3 of 4 — Sequencing</div>
+              <div class="question-title">It worked. Activation is up 15%. Your manager wants to know what's next.</div>
+              <div class="question-context">Your fix shipped 10 days ago. Activation improved 15%. The sprint cost 3 days of engineering time. Priya is asking what you want to tackle next. You have 1 more sprint before stakeholder review.</div>
+
+              <div class="options" id="opts-dp3">
+                <div class="option" id="opt-dp3-A" onclick="pick('dp3','A')">
+                  <div class="opt-letter">A</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Commission a full visual redesign of onboarding</div>
+                    <div class="opt-detail">The UX could be cleaner. Invest in a comprehensive redesign to improve the overall experience.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp3-B" onclick="pick('dp3','B')">
+                  <div class="opt-letter">B</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Build mobile onboarding</div>
+                    <div class="opt-detail">30% of sign-ups happen on mobile, but the onboarding experience isn't optimized for it.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp3-C" onclick="pick('dp3','C')">
+                  <div class="opt-letter">C</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Run 3 A/B test variants on the callout copy</div>
+                    <div class="opt-detail">Optimize the message that's already working. Can likely squeeze more lift out of the same fix.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp3-D" onclick="pick('dp3','D')">
+                  <div class="opt-letter">D</div>
+                  <div class="opt-body">
+                    <div class="opt-title">Investigate the next biggest drop-off in the funnel</div>
+                    <div class="opt-detail">Pull the updated funnel data and find the next step with the highest drop-off rate.</div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" id="next-dp3" disabled onclick="advance('dp3','dp4')">
+                Confirm &amp; continue
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="sim-context-panel">
+              <div class="context-card">
+                <div class="context-card-label">What Just Happened</div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#D1FAE5;">📈</div>
+                  <div>
+                    <div class="ctx-label">Activation Lift</div>
+                    <div class="ctx-value" style="color:#059669;">↑ 15% in 10 days</div>
+                  </div>
+                </div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#DBEAFE;">⚡</div>
+                  <div>
+                    <div class="ctx-label">Engineering Cost</div>
+                    <div class="ctx-value">3 days</div>
+                  </div>
+                </div>
+              </div>
+              <div class="insight-chip">
+                <div class="insight-chip-label">💡 PM Tip</div>
+                <div class="insight-chip-text">When one thing is fixed, the next-biggest problem surfaces. Good PMs follow the data, not their gut, when sequencing what to tackle next.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           SCREEN 7: Decision Point 4
+           ══════════════════════════════ -->
+      <div id="s-dp4" class="screen">
+        <div class="sim-header">
+          <div class="sim-header-left">
+            <button class="back-btn" onclick="goTo('dp3')">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+              </svg>
+              Back
+            </button>
+            <div class="divider-v"></div>
+            <div class="sim-title-block">
+              <div class="sim-title">Product Manager · Decision 4</div>
+              <div class="sim-role">Stakeholder review is tomorrow.</div>
+            </div>
+          </div>
+          <div class="progress-section">
+            <div class="progress-meta"><span>Step 6 of 6</span></div>
+            <div class="progress-track"><div class="progress-fill" style="width:88%"></div></div>
+          </div>
+        </div>
+        <div class="sim-body">
+          <div class="decision-layout">
+            <div class="question-card">
+              <div class="step-eyebrow">Decision 4 of 4 — Communication</div>
+              <div class="question-title">Stakeholder review is tomorrow. You have one opening slide. What's your lede?</div>
+              <div class="question-context">You have 5 minutes to present. Leadership includes the VP of Product, Head of Engineering, and CEO. They've been watching the activation metric for 3 months. What's your first sentence?</div>
+
+              <div class="options" id="opts-dp4">
+                <div class="option" id="opt-dp4-A" onclick="pick('dp4','A')">
+                  <div class="opt-letter">A</div>
+                  <div class="opt-body">
+                    <div class="opt-title">"We found the root cause, shipped a fix in 3 days, and activation improved 15%. Here's what's next."</div>
+                    <div class="opt-detail">Lead with the result, the evidence, and the forward plan.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp4-B" onclick="pick('dp4','B')">
+                  <div class="opt-letter">B</div>
+                  <div class="opt-body">
+                    <div class="opt-title">"We're still gathering data — the hypothesis looks right but we want to be certain before committing."</div>
+                    <div class="opt-detail">Be transparent that more evidence is needed before making a firm recommendation.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp4-C" onclick="pick('dp4','C')">
+                  <div class="opt-letter">C</div>
+                  <div class="opt-body">
+                    <div class="opt-title">"The activation problem is solved. We're moving on."</div>
+                    <div class="opt-detail">Activation improved — the issue is closed and the team is focused on the next priority.</div>
+                  </div>
+                </div>
+                <div class="option" id="opt-dp4-D" onclick="pick('dp4','D')">
+                  <div class="opt-letter">D</div>
+                  <div class="opt-body">
+                    <div class="opt-title">"We've made progress, but to do this properly we need 6 weeks of engineering time."</div>
+                    <div class="opt-detail">The 3-day fix was a patch — a real solution requires a full onboarding rebuild.</div>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-primary" id="next-dp4" disabled onclick="showResults()">
+                See my results
+                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="sim-context-panel">
+              <div class="context-card">
+                <div class="context-card-label">The Full Story</div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#FEE2E2;">📉</div>
+                  <div>
+                    <div class="ctx-label">Started With</div>
+                    <div class="ctx-value down">↓ 12% activation drop</div>
+                  </div>
+                </div>
+                <div class="ctx-row">
+                  <div class="ctx-icon" style="background:#D1FAE5;">📈</div>
+                  <div>
+                    <div class="ctx-label">Shipped</div>
+                    <div class="ctx-value" style="color:#059669;">+15% lift, 3-day fix</div>
+                  </div>
+                </div>
+              </div>
+              <div class="insight-chip">
+                <div class="insight-chip-label">💡 PM Tip</div>
+                <div class="insight-chip-text">Great PM communication leads with impact, not effort. Stakeholders care about outcomes and what comes next — not how hard the work was.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════
+           SCREEN 8: Results
+           ══════════════════════════════ -->
+      <div id="s-results" class="screen">
+        <div class="sim-header">
+          <div class="sim-header-left">
+            <button class="back-btn" onclick="goTo('catalog')">
+              <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+              </svg>
+              Career Explorer
+            </button>
+            <div class="divider-v"></div>
+            <div class="sim-title-block">
+              <div class="sim-title">Your Results</div>
+              <div class="sim-role">Product Manager Simulation</div>
+            </div>
+          </div>
+        </div>
+        <div class="sim-body">
+          <div class="results-layout">
+
+            <!-- Score Hero -->
+            <div class="results-hero">
+              <div class="score-ring-wrap">
+                <svg width="110" height="110" viewBox="0 0 110 110">
+                  <circle cx="55" cy="55" r="46" fill="none" stroke="#E5E7EB" stroke-width="9"/>
+                  <circle id="score-arc" cx="55" cy="55" r="46" fill="none" stroke="#5567D5" stroke-width="9"
+                    stroke-linecap="round" stroke-dasharray="289" stroke-dashoffset="289"
+                    style="transition: stroke-dashoffset 1.4s cubic-bezier(0.4,0,0.2,1)"/>
+                </svg>
+                <div class="score-center">
+                  <div class="score-number" id="score-display">0</div>
+                  <div class="score-denom">/100</div>
+                </div>
+              </div>
+              <div class="results-headline" id="results-headline">You think like a PM.</div>
+              <div class="results-tagline" id="results-tagline">Loading your results...</div>
+              <div class="dim-grid">
+                <div class="dim-item">
+                  <div class="dim-labels">
+                    <span class="dim-name">Problem Framing</span>
+                    <span class="dim-score" id="dim-pf-pct">—</span>
+                  </div>
+                  <div class="dim-track"><div class="dim-bar" id="dim-pf"></div></div>
+                </div>
+                <div class="dim-item">
+                  <div class="dim-labels">
+                    <span class="dim-name">Prioritization</span>
+                    <span class="dim-score" id="dim-p-pct">—</span>
+                  </div>
+                  <div class="dim-track"><div class="dim-bar" id="dim-p"></div></div>
+                </div>
+                <div class="dim-item">
+                  <div class="dim-labels">
+                    <span class="dim-name">User Thinking</span>
+                    <span class="dim-score" id="dim-ut-pct">—</span>
+                  </div>
+                  <div class="dim-track"><div class="dim-bar" id="dim-ut"></div></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Strengths + Growth -->
+            <div class="results-row">
+              <div class="results-card">
+                <div class="rc-title">
+                  <span>✦</span> What you did well
+                </div>
+                <ul class="rc-list" id="strengths-list"></ul>
+              </div>
+              <div class="results-card">
+                <div class="rc-title">
+                  <span>↗</span> Where to grow
+                </div>
+                <ul class="rc-list" id="growth-list"></ul>
+              </div>
+            </div>
+
+            <!-- Resume Bullet -->
+            <div class="resume-card">
+              <div class="resume-label">
+                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                </svg>
+                Your Resume Bullet
+              </div>
+              <div class="resume-sub">Based on the work you completed in this simulation.</div>
+              <div class="resume-bullet" id="resume-bullet">Loading...</div>
+            </div>
+
+            <!-- Why this is real PM work -->
+            <div class="results-card" style="margin-bottom:16px;">
+              <div class="rc-title">
+                <span>🔍</span> Why this reflects real product management
+              </div>
+              <p style="font-size:13px;color:var(--text-700);line-height:1.7;">
+                You just worked through a real PM problem: a metric dropped, and you had to diagnose it, prioritize a fix, ship under constraints, and communicate the outcome to stakeholders. Every decision you made maps to something PMs do every week — pulling funnel data before jumping to solutions, identifying structural blockers through user feedback, choosing the highest-ROI fix over the most thorough one, and leading with outcomes in stakeholder reviews. This isn't a simplified version of PM work. It's what the job actually looks like.
+              </p>
+            </div>
+
+            <!-- Extern CTA -->
+            <div class="cta-card">
+              <div class="cta-top">
+                <div class="cta-eyebrow">Your next step on Extern</div>
+                <div class="cta-title">BeReal — Product Innovation Externship</div>
+                <div class="cta-sub">Work on a real product challenge with one of the fastest-growing apps in the world.</div>
+              </div>
+              <div class="cta-bottom">
+                <div class="cta-details">
+                  <div class="cta-detail">
+                    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+                    </svg>
+                    <strong>8 weeks</strong> &nbsp;·&nbsp; 5-10 hrs/week
+                  </div>
+                  <div class="cta-detail">
+                    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+                    </svg>
+                    Starts <strong>March 23, 2026</strong>
+                  </div>
+                  <div class="cta-detail">
+                    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
+                    </svg>
+                    Product Management
+                  </div>
+                </div>
+                <button class="cta-link" onclick="alert('This would navigate to the BeReal externship listing on extern.com')">
+                  Apply Now
+                  <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<script>
+  // ─── State ───────────────────────────────────────────────
+  const state = {
+    sel: {},
+    scores: { pf: 0, p: 0, ut: 0 }
+  };
+
+  // ─── Scoring matrix ──────────────────────────────────────
+  // pf=problemFraming, p=prioritization, ut=userThinking
+  const SCORING = {
+    dp1: {
+      A: { pf: 5,  p: 0,  ut: 15 },
+      B: { pf: 20, p: 15, ut: 5  },  // best: data-first
+      C: { pf: 0,  p: 5,  ut: 0  },
+      D: { pf: 15, p: 5,  ut: 10 }
+    },
+    task: {
+      A: { pf: 5,  p: 0, ut: 5  },
+      B: { pf: 5,  p: 0, ut: 5  },
+      C: { pf: 15, p: 0, ut: 20 },  // best: structural blocker
+      D: { pf: 5,  p: 0, ut: 10 }
+    },
+    dp2: {
+      A: { pf: 5,  p: 0,  ut: 0  },
+      B: { pf: 10, p: 20, ut: 5  },  // best: targeted fast fix
+      C: { pf: 5,  p: 5,  ut: 15 },
+      D: { pf: 10, p: 10, ut: 10 }
+    },
+    dp3: {
+      A: { pf: 5,  p: 5,  ut: 5  },
+      B: { pf: 5,  p: 10, ut: 5  },
+      C: { pf: 10, p: 5,  ut: 5  },
+      D: { pf: 20, p: 20, ut: 10 }   // best: follow the funnel
+    },
+    dp4: {
+      A: { pf: 20, p: 5,  ut: 5  },  // best: outcome-led comms
+      B: { pf: 0,  p: 0,  ut: 5  },
+      C: { pf: 5,  p: 0,  ut: 0  },
+      D: { pf: 0,  p: -5, ut: 0  }
+    }
+  };
+
+  const MAX = { pf: 85, p: 60, ut: 55 };
+
+  // ─── Navigation ──────────────────────────────────────────
+  function goTo(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('s-' + id).classList.add('active');
+    document.querySelector('.content').scrollTop = 0;
+
+    // sidebar active state
+    const isExplorer = ['catalog','intro','dp1','task','dp2','dp3','dp4','results'].includes(id);
+    document.getElementById('nav-explorer').classList.toggle('active', isExplorer);
+  }
+
+  // ─── Option selection ─────────────────────────────────────
+  function pick(dpId, letter) {
+    state.sel[dpId] = letter;
+    document.querySelectorAll(`#opts-${dpId} .option`).forEach(o => o.classList.remove('selected'));
+    document.getElementById(`opt-${dpId}-${letter}`).classList.add('selected');
+    document.getElementById(`next-${dpId}`).disabled = false;
+  }
+
+  // ─── Score and advance ────────────────────────────────────
+  function advance(dpId, nextScreen) {
+    const letter = state.sel[dpId];
+    if (!letter) return;
+    const s = SCORING[dpId][letter];
+    state.scores.pf += s.pf;
+    state.scores.p  += s.p;
+    state.scores.ut += s.ut;
+    goTo(nextScreen);
+  }
+
+  function setProgress(pct, label) { /* no-op — handled inline */ }
+
+  // ─── Results ─────────────────────────────────────────────
+  function showResults() {
+    advance('dp4', 'results');
+    renderResults();
+  }
+
+  function renderResults() {
+    const pfN  = Math.round((Math.max(0, state.scores.pf) / MAX.pf) * 100);
+    const pN   = Math.round((Math.max(0, state.scores.p)  / MAX.p)  * 100);
+    const utN  = Math.round((Math.max(0, state.scores.ut) / MAX.ut) * 100);
+    const fit  = Math.round(pfN * 0.40 + pN * 0.35 + utN * 0.25);
+
+    // Score ring
+    const circumference = 289;
+    setTimeout(() => {
+      document.getElementById('score-arc').style.strokeDashoffset =
+        circumference - (circumference * fit / 100);
+      animateCounter('score-display', 0, fit, 1200);
+    }, 200);
+
+    // Dimension bars
+    setTimeout(() => {
+      document.getElementById('dim-pf').style.width = pfN + '%';
+      document.getElementById('dim-p').style.width  = pN  + '%';
+      document.getElementById('dim-ut').style.width = utN + '%';
+      document.getElementById('dim-pf-pct').textContent = pfN + '%';
+      document.getElementById('dim-p-pct').textContent  = pN  + '%';
+      document.getElementById('dim-ut-pct').textContent = utN + '%';
+    }, 400);
+
+    // Headline + tagline
+    let headline, tagline;
+    if (fit >= 85) {
+      headline = 'You think like a PM.';
+      tagline  = 'Strong, consistent instincts across all four decisions. You diagnosed before prescribing, prioritized for ROI, and led with outcomes. This is what senior PMs do.';
+    } else if (fit >= 65) {
+      headline = 'Solid PM foundations.';
+      tagline  = 'You got the core right — data before assumptions, targeted fixes over big rewrites, outcomes in stakeholder reviews. A few decisions could be sharpened, but the fundamentals are there.';
+    } else if (fit >= 45) {
+      headline = 'You\'re drawn to this work.';
+      tagline  = 'You\'re thinking about the right things — users, tradeoffs, communication. The PM judgment takes practice, but the instincts are there to build on.';
+    } else {
+      headline = 'Product management is a craft.';
+      tagline  = 'This was your first time in the seat — and it showed in a few decisions. The good news: PM thinking is learnable, and real project work is the fastest way to develop it.';
+    }
+    document.getElementById('results-headline').textContent = headline;
+    document.getElementById('results-tagline').textContent  = tagline;
+
+    // Strengths
+    const strengths = [];
+    if (pfN >= 70) strengths.push('You diagnose before prescribing — you look for root causes, not surface symptoms.');
+    if (pN  >= 70) strengths.push('You prioritize ruthlessly. High-ROI, low-effort moves over big swings with uncertain payoff.');
+    if (utN >= 70) strengths.push('You keep users at the center. You read the feedback carefully and found the structural issue others missed.');
+    if (state.sel.dp4 === 'A') strengths.push('Your stakeholder communication was crisp: outcome first, evidence second, next steps third.');
+    if (state.sel.dp1 === 'B') strengths.push('You reached for data before assumptions — a key PM discipline that saves weeks of wasted work.');
+    if (state.sel.task === 'C') strengths.push('You identified a structural blocker, not a surface UX complaint. That\'s the harder, more important finding.');
+    if (strengths.length === 0) strengths.push('You made it through the simulation and engaged with real PM decisions — that takes the kind of critical thinking PMs use every day.');
+
+    // Growth areas
+    const growth = [];
+    if (pfN < 60) growth.push('Problem framing: practice diagnosing with data before forming a point of view.');
+    if (pN  < 60) growth.push('Prioritization: ask "what\'s the minimum viable test of this hypothesis?" before scoping solutions.');
+    if (utN < 60) growth.push('User thinking: look for the structural reason behind a metric move, not just what users say they feel.');
+    if (state.sel.dp4 !== 'A') growth.push('Stakeholder communication: lead with impact and the forward plan — not caveats or hedging.');
+    if (growth.length === 0)  growth.push('Push your sequencing instincts — once one problem is fixed, following the funnel data to the next bottleneck is how PMs compound impact.');
+
+    const slEl  = document.getElementById('strengths-list');
+    const grEl  = document.getElementById('growth-list');
+    slEl.innerHTML = strengths.slice(0,3).map(s => `<li><span>✦</span>${s}</li>`).join('');
+    grEl.innerHTML = growth.slice(0,3).map(g => `<li><span>↗</span>${g}</li>`).join('');
+
+    // Resume bullet
+    const method     = state.sel.dp1 === 'A' ? 'user interview analysis' : 'funnel analytics investigation';
+    const rootCause  = state.sel.task === 'C' ? 'permission-model friction blocking non-admin sign-ups' : 'onboarding friction at team setup step';
+    const approach   = state.sel.dp2 === 'B' ? '3-day targeted callout fix' : (state.sel.dp2 === 'C' ? 'validated root cause via user survey, then shipped targeted fix' : 'shipped targeted fix');
+    document.getElementById('resume-bullet').textContent =
+      `Diagnosed 12% activation drop for 50K-user SaaS; identified ${rootCause} through ${method}; shipped ${approach} → 15% activation improvement in 10 days.`;
+  }
+
+  function animateCounter(elId, from, to, duration) {
+    const el    = document.getElementById(elId);
+    const start = performance.now();
+    function tick(now) {
+      const elapsed = Math.min(now - start, duration);
+      const progress = elapsed / duration;
+      const ease = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(from + (to - from) * ease);
+      if (elapsed < duration) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+</script>
+</body>
+</html>
