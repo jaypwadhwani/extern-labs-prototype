@@ -103,6 +103,14 @@
   .frame.mobile .trialbar .who{font-size:15px;justify-content:space-between}
   .frame.mobile .trialbar .btn-primary{width:100%;height:44px}
 
+
+  /* door placement variants */
+  .inline-door{display:none;align-items:center;gap:6px;color:var(--brand);font-weight:500;font-size:14px;background:none;border:0;padding:0 6px;white-space:nowrap}
+  .inline-door .ic{width:22px;height:22px;border-radius:50%;background:var(--brand-subtle);display:inline-flex;align-items:center;justify-content:center;font-size:10px}
+  .frame.door-inline .door{display:none !important}
+  .frame.door-inline .inline-door{display:inline-flex}
+  .frame.mobile.door-inline .inline-door{font-size:13px;padding:0 2px}
+
   /* ================= modals ================= */
   .scrim{position:absolute;inset:0;background:rgba(28,27,27,.12);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:30}
   .modal{background:#fff;border-radius:24px;border:1px solid var(--border);width:100%;max-width:580px;max-height:100%;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px;box-shadow:0 30px 60px -30px rgba(28,27,27,.45)}
@@ -272,6 +280,7 @@
       </div>
       <div class="seg" id="mode"><button data-mode="proposed" class="on">Proposed</button><button data-mode="today">Today</button></div>
       <div class="seg" id="device"><button data-device="desktop" class="on">Desktop</button><button data-device="mobile">Mobile</button></div>
+      <div class="seg" id="doorstyle"><button data-door="row" class="on">Door: row under actions</button><button data-door="inline">Door: inline link</button></div>
       <label class="legend"><input type="checkbox" id="markNew" checked style="margin:0 6px 0 0"><i></i>outline what's new</label>
     </div>
 
@@ -289,8 +298,8 @@
                 <div class="body">
                   <h3>Attronica Financial Planning &amp; Analysis and Private Company Valuation Externship</h3>
                   <div class="focus"><span>Key focus areas</span><b>FP&amp;A, Valuation, DCF</b></div>
-                  <div class="actions"><button class="btn btn-quiet" type="button" data-go="learn">Learn more</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
-                  <button class="door new" type="button" data-go="brief"><span class="ic">▶</span><span class="t"><b>Try 2 minutes of this project</b><small>Do a piece of Project 1 before you decide</small></span><span class="arrow">→</span></button>
+                  <div class="actions"><button class="btn btn-quiet" type="button" data-go="learn">Learn more</button><button class="inline-door new" type="button" data-go="brief"><span class="ic">▶</span>Try 2 min</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
+                  <button class="door new" type="button" data-go="brief"><span class="ic">▶</span><span class="t"><b>Try 2 minutes of this project</b><small>See exactly what you'd do in week one, before you decide</small></span><span class="arrow">→</span></button>
                 </div>
               </article>
               <article class="rcard">
@@ -298,7 +307,7 @@
                 <div class="body">
                   <h3>Yinan Value Investing &amp; Financial Modeling Externship</h3>
                   <div class="focus"><span>Key focus areas</span><b>Modeling, Investing</b></div>
-                  <div class="actions"><button class="btn btn-quiet" type="button">Learn more</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
+                  <div class="actions"><button class="btn btn-quiet" type="button">Learn more</button><button class="inline-door new" type="button" disabled style="opacity:.45"><span class="ic">▶</span>Try 2 min</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
                   <button class="door new quiet" type="button" disabled><span class="ic">▶</span><span class="t"><b>Try 2 minutes of this project</b><small>Prototype wires Attronica only</small></span><span class="arrow">→</span></button>
                 </div>
               </article>
@@ -307,7 +316,7 @@
                 <div class="body">
                   <h3>Mangusta Capital Deal Sourcing &amp; Startup Analysis Externship</h3>
                   <div class="focus"><span>Key focus areas</span><b>Venture, Analysis</b></div>
-                  <div class="actions"><button class="btn btn-quiet" type="button">Learn more</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
+                  <div class="actions"><button class="btn btn-quiet" type="button">Learn more</button><button class="inline-door new" type="button" disabled style="opacity:.45"><span class="ic">▶</span>Try 2 min</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
                   <button class="door new quiet" type="button" disabled><span class="ic">▶</span><span class="t"><b>Try 2 minutes of this project</b><small>Prototype wires Attronica only</small></span><span class="arrow">→</span></button>
                 </div>
               </article>
@@ -534,6 +543,7 @@
     document.querySelectorAll('#device button').forEach(function(x){x.classList.toggle('on',x===b)});
     frame.classList.toggle('mobile',b.dataset.device==='mobile');
   })});
+  document.querySelectorAll('#doorstyle button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#doorstyle button').forEach(function(x){x.classList.toggle('on',x===b)});frame.classList.toggle('door-inline',b.dataset.door==='inline');})});
   document.getElementById('markNew').addEventListener('change',function(e){frame.classList.toggle('hl',e.target.checked)});
 
   var CARDS=[
