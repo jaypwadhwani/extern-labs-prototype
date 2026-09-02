@@ -254,16 +254,81 @@
   .summary{background:#fff;border:1px solid #d9d4d3;border-radius:16px;padding:16px 20px;font-size:14px;color:var(--text-subtle);display:flex;flex-direction:column;gap:8px}
   .summary b{color:var(--text);font-weight:500}
   @media (prefers-reduced-motion:reduce){.card,.lean .bar i{transition:none}}
+
+  /* ================= v3 additions ================= */
+  .rail{flex-wrap:wrap}
+  .leanwrap{width:100%;display:none;flex-direction:column;gap:6px;padding-top:8px}
+  .leanwrap.show{display:flex}
+  .leanwrap .cap{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500;display:flex;justify-content:space-between}
+  .leanwrap .cap b{font-weight:600;color:var(--text);letter-spacing:0;text-transform:none;font-size:12px}
+  .stackbar{display:flex;height:10px;border-radius:10px;overflow:hidden;background:var(--border)}
+  .stackbar i{display:block;height:100%;width:33.33%;transition:width .5s ease}
+  .stackbar i[data-ex="attronica"]{background:#2853d2}
+  .stackbar i[data-ex="yinan"]{background:#006e20}
+  .stackbar i[data-ex="mangusta"]{background:#cc7015}
+  .legend3{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--text-subtle)}
+  .legend3 span{display:inline-flex;align-items:center;gap:6px;font-variant-numeric:tabular-nums}
+  .legend3 span:before{content:"";width:9px;height:9px;border-radius:50%;background:var(--border)}
+  .legend3 span[data-ex="attronica"]:before{background:#2853d2}
+  .legend3 span[data-ex="yinan"]:before{background:#006e20}
+  .legend3 span[data-ex="mangusta"]:before{background:#cc7015}
+  .legend3 span.lead{font-weight:600;color:var(--text)}
+  .chip{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:600;padding:3px 9px;border-radius:100px;background:var(--surface-subtle);color:var(--text-subtle)}
+  .chip[data-ex="attronica"]{background:#dce1ff;color:#001d69}
+  .chip[data-ex="yinan"]{background:#c8ffc1;color:#0b3d12}
+  .chip[data-ex="mangusta"]{background:#ffd1a3;color:#4c2a08}
+  .card{height:340px}
+  .card .top{display:flex;justify-content:space-between;align-items:center}
+  .card .line{font-size:24px}
+  .card .tag{font-size:12px;color:var(--text-subtle);display:flex;flex-direction:column;gap:2px}
+  .card .tag b{font-weight:500;color:var(--text)}
+  .deckwrap{height:370px}
+  .others{display:flex;flex-direction:column;gap:10px;border:1px dashed var(--border-strong);border-radius:14px;padding:12px 14px;background:#fff;max-width:620px}
+  .others p{font-size:14px;color:var(--text-subtle)}
+  .others .row{display:flex;gap:10px;align-items:center;font-size:14px}
+  .others .row .mark{width:30px;height:30px;font-size:16px;border-radius:8px}
+  .others .row .mark[data-ex="yinan"]{background:#006e20}
+  .others .row .mark[data-ex="mangusta"]{background:#cc7015}
+  .others .row b{font-weight:500}
+  .others .row span{color:var(--text-muted);font-size:12px}
+  .sliders{display:flex;flex-direction:column;gap:22px;max-width:620px}
+  .slider{display:flex;flex-direction:column;gap:10px;border:1px solid var(--border);border-radius:16px;padding:16px 18px;background:#fff}
+  .slider .q{font-family:var(--serif);font-size:22px;line-height:1.2;letter-spacing:-.2px}
+  .slider .poles{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--text-subtle)}
+  .slider .poles div{display:flex;flex-direction:column;gap:4px;max-width:46%}
+  .slider .poles div:last-child{text-align:right;align-items:flex-end}
+  .slider input[type=range]{width:100%;accent-color:var(--brand);height:28px;cursor:pointer}
+  .slider .state{font-size:12px;color:var(--text-muted);text-align:center;min-height:16px}
+  .payhead{display:flex;flex-direction:column;gap:6px}
+  .payhead .sub{font-size:15px;color:var(--text-subtle)}
+  .proof{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:620px}
+  .frame.mobile .proof{grid-template-columns:1fr}
+  .proof .box{border:1px solid var(--border);border-radius:12px;padding:12px 14px;background:#fff;display:flex;flex-direction:column;gap:6px}
+  .proof .box .eyebrow{font-size:10px}
+  .proof .box ul{margin:0;padding-left:16px;font-size:13px;color:var(--text-subtle);display:flex;flex-direction:column;gap:4px}
+  .proof .box .big{font-family:var(--serif);font-size:26px;line-height:1.05}
+  .proof .box .big b{color:var(--brand);font-weight:400}
+  .cliff{border-left:3px solid var(--brand);background:var(--brand-subtle);border-radius:0 12px 12px 0;padding:12px 16px;max-width:620px;display:flex;flex-direction:column;gap:6px}
+  .cliff .q{font-family:var(--serif);font-size:22px;line-height:1.2;color:var(--brand-deep)}
+  .cliff p{font-size:14px;color:var(--text-subtle)}
+  .runner{display:flex;gap:10px;align-items:center;font-size:13px;color:var(--text-subtle);max-width:620px}
+  .runner button{background:none;border:0;color:var(--brand);font-weight:500;padding:0;text-decoration:underline;text-underline-offset:3px}
+  .chart{border:1px solid var(--border);border-radius:12px;background:#fff;padding:12px 14px;max-width:520px;display:flex;flex-direction:column;gap:6px}
+  .chart svg{width:100%;height:120px;display:block}
+  .chart .cap{font-size:11px;color:var(--text-muted)}
+  .inbox{display:flex;flex-direction:column;gap:8px;max-width:620px}
+  .frame.mobile .card .line{font-size:22px}
+  .frame.mobile .deckwrap{height:380px}
 </style>
 </head>
 <body>
 <div class="review">
   <div class="mast">
     <div>
-      <div class="kicker">Labs · Experiment 5 · design review v2</div>
-      <h1>Try one <em>before</em> you buy, on today's plans page</h1>
+      <div class="kicker">Labs · Experiment 5 · design review v3</div>
+      <h1>Which one is <em>yours</em>, in two and a half minutes</h1>
     </div>
-    <p class="sub">Every screen a learner touches, rebuilt on top of what ships today. Screens marked TODAY are reproductions of the live page. Dashed outlines mark what's new. Switch Today / Proposed to see the diff, and Desktop / Mobile for both layouts.</p>
+    <p class="sub">v3 does two jobs on the plans page: it proves the work is real, and it shows the learner which of their three recommended externships fits them, with the lean visible after every interaction. Every moment, manager, question and deliverable is lifted from the real curricula. Switch Desktop / Mobile for both layouts.</p>
   </div>
 
   <!-- ================= FRAME COLUMN ================= -->
@@ -272,15 +337,15 @@
       <div class="steps" id="steps">
         <button data-go="wall" class="on"><span class="n">1</span>Plans page</button>
         <button data-go="learn"><span class="n">2</span>Learn more</button>
-        <button data-go="brief"><span class="n">3</span>Teaser · brief</button>
-        <button data-go="swipe"><span class="n">4</span>Teaser · swipes</button>
-        <button data-go="call"><span class="n">5</span>Teaser · the call</button>
-        <button data-go="payoff"><span class="n">6</span>Teaser · payoff</button>
-        <button data-go="plan"><span class="n">7</span>Plan picker</button>
+        <button data-go="brief"><span class="n">3</span>Brief</button>
+        <button data-go="swipe"><span class="n">4</span>Six moments</button>
+        <button data-go="sliders"><span class="n">5</span>Two sliders</button>
+        <button data-go="call"><span class="n">6</span>The call</button>
+        <button data-go="payoff"><span class="n">7</span>Payoff</button>
+        <button data-go="plan"><span class="n">8</span>Plan picker</button>
       </div>
       <div class="seg" id="mode"><button data-mode="proposed" class="on">Proposed</button><button data-mode="today">Today</button></div>
       <div class="seg" id="device"><button data-device="desktop" class="on">Desktop</button><button data-device="mobile">Mobile</button></div>
-      <div class="seg" id="doorstyle"><button data-door="row" class="on">Door: row under actions</button><button data-door="inline">Door: inline link</button></div>
       <label class="legend"><input type="checkbox" id="markNew" checked style="margin:0 6px 0 0"><i></i>outline what's new</label>
     </div>
 
@@ -292,35 +357,7 @@
         <section class="screen active" data-screen="wall">
           <div class="plans">
             <div class="plans-head"><h2>Your top recommendations</h2><p>Showing 3 of 20+ projects matched to your interests</p></div>
-            <div class="cards">
-              <article class="rcard">
-                <div class="img">▨<span class="co">Attronica</span></div>
-                <div class="body">
-                  <h3>Attronica Financial Planning &amp; Analysis and Private Company Valuation Externship</h3>
-                  <div class="focus"><span>Key focus areas</span><b>FP&amp;A, Valuation, DCF</b></div>
-                  <div class="actions"><button class="btn btn-quiet" type="button" data-go="learn">Learn more</button><button class="inline-door new" type="button" data-go="brief"><span class="ic">▶</span>Try it first · 2 min</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
-                  <button class="door new" type="button" data-go="brief"><span class="ic">▶</span><span class="t"><b>Try it first · 2 min</b></span><span class="arrow">→</span></button>
-                </div>
-              </article>
-              <article class="rcard">
-                <div class="img">▨<span class="co">Yinan</span></div>
-                <div class="body">
-                  <h3>Yinan Value Investing &amp; Financial Modeling Externship</h3>
-                  <div class="focus"><span>Key focus areas</span><b>Modeling, Investing</b></div>
-                  <div class="actions"><button class="btn btn-quiet" type="button">Learn more</button><button class="inline-door new" type="button" disabled style="opacity:.45"><span class="ic">▶</span>Try it first · 2 min</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
-                  <button class="door new quiet" type="button" disabled><span class="ic">▶</span><span class="t"><b>Try it first · 2 min</b></span><span class="arrow">→</span></button>
-                </div>
-              </article>
-              <article class="rcard">
-                <div class="img">▨<span class="co">Mangusta Capital</span></div>
-                <div class="body">
-                  <h3>Mangusta Capital Deal Sourcing &amp; Startup Analysis Externship</h3>
-                  <div class="focus"><span>Key focus areas</span><b>Venture, Analysis</b></div>
-                  <div class="actions"><button class="btn btn-quiet" type="button">Learn more</button><button class="inline-door new" type="button" disabled style="opacity:.45"><span class="ic">▶</span>Try it first · 2 min</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
-                  <button class="door new quiet" type="button" disabled><span class="ic">▶</span><span class="t"><b>Try it first · 2 min</b></span><span class="arrow">→</span></button>
-                </div>
-              </article>
-            </div>
+            <div class="cards" id="cards"></div>
             <button class="browse" type="button">Browse all Projects</button>
           </div>
           <div class="trialbar"><div class="who"><span class="avatars"><i></i><i></i><i></i></span><span><b>3/4</b> of externs <b>find a job outcome</b> within 1 year</span></div><button class="btn btn-primary" type="button" data-go="plan">Start $0 trial</button></div>
@@ -333,15 +370,11 @@
           </div>
           <div class="scrim">
             <div class="modal">
-              <div class="mh"><div class="co"></div><h3>Attronica Financial Planning &amp; Analysis and Private Company Valuation Externship</h3><button class="x" type="button" data-go="wall">✕</button></div>
-              <p class="body">Diagnose a real private company's financial health, project the AV division five years out, value it with a DCF and comps, and make the case to a buyer.</p>
+              <div class="mh"><div class="co"></div><h3 id="learnTitle">Attronica Financial Planning &amp; Analysis and Private Company Valuation Externship</h3><button class="x" type="button" data-go="wall">✕</button></div>
+              <p class="body" id="learnBody">Diagnose a real private company's financial health, project the AV division five years out, value it with a DCF and comps, and make the case to a buyer.</p>
               <div class="hero"></div>
               <h4>What you will learn and accomplish</h4>
-              <div class="learn">
-                <div class="row"><span class="n">1</span><div><b>Diagnose financial health</b><span>Read the three statements and calculate the 8 ratios FP&amp;A analysts use.</span></div></div>
-                <div class="row"><span class="n">2</span><div><b>Build a five-year projection</b><span>Project the AV division and defend it under stress-test.</span></div></div>
-                <div class="row"><span class="n">3</span><div><b>Value the division</b><span>DCF plus a comparable-companies cross-check.</span></div></div>
-              </div>
+              <div class="learn" id="learnRows"></div>
               <div class="foot">
                 <button class="btn btn-outline btn-block" type="button" data-go="plan">Start now</button>
                 <button class="btn btn-quiet btn-block new" type="button" data-go="brief" style="color:var(--brand)">Try it first · 2 min →</button>
@@ -353,13 +386,17 @@
         <!-- 3 · BRIEF -->
         <section class="screen" data-screen="brief">
           <div class="shell">
-            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i></i><i></i><i></i></div><span class="time">~2 min</span></div>
+            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i></i><i></i><i></i><i></i></div><span class="time">~2½ min</span></div>
             <div class="col">
-              <div class="company"><div class="mark">A</div><div class="who"><b>Attronica</b><span>Financial Planning &amp; Analysis · Project 1 of 5</span></div></div>
-              <h2 class="display">Priya runs the engagement. Here's your first day.</h2>
-              <p class="body">Attronica is a real private company that opened its books to Extern. Your first job: diagnose its financial health from three statements and tell Priya, in writing, what the numbers say is wrong.</p>
-              <div class="path"><div class="now">Diagnose its financial health</div><div>Customer, cost &amp; cash story</div><div>Project the AV division</div><div>Value it: DCF &amp; comps</div><div>Make the case to a buyer</div></div>
-              <p class="sell">This is the actual brief. Not a course about FP&amp;A. <em>The job.</em></p>
+              <div class="company"><div class="mark" id="briefMark">A</div><div class="who"><b id="briefName">Attronica</b><span id="briefTrack">Financial Planning &amp; Analysis · Project 1 of 5</span></div></div>
+              <h2 class="display" id="briefHead"></h2>
+              <p class="body" id="briefBody"></p>
+              <div class="path" id="briefPath"></div>
+              <p class="sell" id="briefSell"></p>
+              <div class="others new">
+                <p><b>Two more companies on your list want the same two minutes.</b> Every answer from here nudges a bar toward the one that fits you. If none of them do, we'll say so.</p>
+                <div id="otherRows"></div>
+              </div>
               <div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" data-go="swipe">Show me the work →</button><button class="btn btn-quiet" type="button" data-go="wall">Not now</button></div></div>
             </div>
           </div>
@@ -368,53 +405,51 @@
         <!-- 4 · SWIPES -->
         <section class="screen" data-screen="swipe">
           <div class="shell">
-            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i></i><i></i></div><span class="time">~1½ min</span></div>
+            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i></i><i></i><i></i></div><span class="time">~1 min</span>
+              <div class="leanwrap show" data-lean></div>
+            </div>
             <div class="col">
-              <div class="stack" style="gap:4px"><span class="eyebrow">Attronica · four moments from the project</span><h3 class="title">Would you want to do this?</h3></div>
+              <div class="stack" style="gap:4px"><span class="eyebrow">Six real moments · two from each externship</span><h3 class="title">Would you want to do this?</h3></div>
               <div class="deckwrap" id="deck"></div>
               <div class="hint"><span class="n">← no</span> &nbsp;·&nbsp; <span class="y">yes →</span></div>
-              <div class="controls"><button class="round no" type="button" id="btnNo" aria-label="Not for me">✕</button><span class="counter" id="counter">0 / 4</span><button class="round yes" type="button" id="btnYes" aria-label="I'd want this">✓</button></div>
+              <div class="controls"><button class="round no" type="button" id="btnNo" aria-label="Not for me">✕</button><span class="counter" id="counter">0 / 6</span><button class="round yes" type="button" id="btnYes" aria-label="I'd want this">✓</button></div>
             </div>
           </div>
         </section>
 
-        <!-- 5 · THE CALL -->
+        <!-- 5 · SLIDERS -->
+        <section class="screen" data-screen="sliders">
+          <div class="shell">
+            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i></div><span class="time">~20s</span>
+              <div class="leanwrap show" data-lean></div>
+            </div>
+            <div class="col">
+              <div class="stack" style="gap:4px"><span class="eyebrow">Two ways these three jobs differ</span><h3 class="title">Where do you sit?</h3></div>
+              <div class="sliders" id="sliders"></div>
+              <div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" id="toCall" data-go="call" disabled>Make one real call →</button></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 · THE CALL -->
         <section class="screen" data-screen="call">
           <div class="shell">
-            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><span class="time">~1 min</span></div>
-            <div class="col">
-              <div class="stack" style="gap:4px"><span class="eyebrow">Step 2 · Understand what the numbers are telling you</span><h3 class="title">In the project you calculate the 8 ratios on Attronica's statements. Here's one, on the program's worked example.</h3></div>
-              <div class="table"><div class="hd"><span>IES · reference company</span><span>FY1</span><span>FY2</span></div><div class="row"><span>Revenue</span><span>$12.0M</span><span>$14.4M</span></div><div class="row"><span>Gross profit</span><span>$4.6M</span><span>$4.9M</span></div><div class="row em"><span>Gross margin</span><span>38%</span><span>34%</span></div><div class="cap">Practice numbers from the program's worked example, not Attronica's.</div></div>
-              <p class="body">Revenue grew 20%. Gross margin fell four points. What's the FP&amp;A read?</p>
-              <div class="picks" id="picks">
-                <button class="pick" type="button" data-right="1"><span class="k">A</span><span>Cost creep or pricing pressure. Dig into COGS before anyone celebrates the growth.</span></button>
-                <button class="pick" type="button"><span class="k">B</span><span>Growth is healthy. Margin will recover with scale, no action needed.</span></button>
-                <button class="pick" type="button"><span class="k">C</span><span>Cut headcount to protect the bottom line.</span></button>
-              </div>
-              <div class="verdict good" id="vGood"><b>That's the read.</b> In Project 1 you do this on Attronica's real statements, eight ratios, and write it up for Priya.</div>
-              <div class="verdict bad" id="vBad"><b>Not quite.</b> Growing revenue with a falling margin means each sale earns less. The first question is why, and the answer is in cost of goods.</div>
-              <div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" id="toPayoff" data-go="payoff" disabled>See what you'd walk away with →</button></div></div>
+            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><span class="time">~30s</span>
+              <div class="leanwrap show" data-lean></div>
             </div>
+            <div class="col" id="callCol"></div>
           </div>
         </section>
 
-        <!-- 6 · PAYOFF -->
+        <!-- 7 · PAYOFF -->
         <section class="screen" data-screen="payoff">
           <div class="shell">
-            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><span class="time">done</span></div>
-            <div class="col">
-              <h2 class="display" id="payoffHead">You said yes to 3 of 4 days.</h2>
-              <div class="lean"><div class="bar"><i id="leanBar"></i></div><div class="lbl"><span id="leanText">Three of the four moments pulled you in</span><span>Attronica · Project 1</span></div></div>
-              <div class="stack" style="gap:8px"><span class="eyebrow">What you'd walk away with</span>
-                <div class="artifacts"><div><span class="p">P1</span><span>An FP&amp;A diagnostic of a real company, written for its finance lead</span></div><div><span class="p">P3</span><span>A five-year projection you defended under stress-test</span></div><div><span class="p">P4</span><span>A DCF and a comps cross-check</span></div><div><span class="p">P5</span><span>A four-page recommendation to a buyer</span></div></div>
-                <div class="portfolio"><div class="thumb"></div><span>All four land on your portfolio page, with Attronica's name on them.</span></div>
-              </div>
-              <div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" data-go="plan">Start your $0 trial with Attronica →</button><button class="btn btn-quiet" type="button" data-go="wall">See other projects</button></div></div>
-            </div>
+            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><span class="time">done</span></div>
+            <div class="col" id="payCol"></div>
           </div>
         </section>
 
-        <!-- 7 · PLAN PICKER (today's modal) -->
+        <!-- 8 · PLAN PICKER (today's modal) -->
         <section class="screen" data-screen="plan">
           <div class="plans" aria-hidden="true" style="filter:blur(4px);opacity:.6;pointer-events:none">
             <div class="plans-head"><h2>Your top recommendations</h2><p>Showing 3 of 20+ projects matched to your interests</p></div>
@@ -423,7 +458,7 @@
             <div class="modal wide">
               <div style="display:flex;justify-content:flex-end"><button class="x" type="button" data-go="wall">✕</button></div>
               <div class="plans-modal-head"><h3>Choose a plan &amp; start your $0 trial</h3><p>You won't be charged today &nbsp;•&nbsp; All plans can be cancelled anytime</p></div>
-              <div class="continuity new"><div class="mark">A</div><span><b>Attronica</b> is set as your first project. Your trial starts there the moment you pick a plan.</span></div>
+              <div class="continuity new"><div class="mark" id="planMark">A</div><span><b id="planName">Attronica</b> is set as your first project. Your trial starts there the moment you pick a plan.</span></div>
               <div class="pgrid">
                 <div class="pcard sel"><span class="tag">🗓️ Monthly Plan</span><div class="price">$20<small>/month</small></div><p class="desc">Full access, cancel anytime</p><div class="sep"></div><button class="btn btn-primary btn-block" type="button">Start $0 trial</button><ul><li><i>✓</i>Every externship, every project</li><li><i>✓</i>Portfolio with your name on it</li><li><i>✓</i>Certificate on completion</li></ul></div>
                 <div class="pcard"><span class="badge">Most popular</span><span class="tag">📆 4-Month Plan</span><div class="price">$15<small>/month</small></div><span class="strike">$20/month</span><p class="desc">Billed $60 every 4 months</p><div class="sep"></div><button class="btn btn-outline btn-block" type="button">Start $0 trial</button><ul><li><i>✓</i>Everything in Monthly</li><li><i>✓</i>Save 25%</li><li><i>✓</i>Time to finish two externships</li></ul></div>
@@ -440,76 +475,82 @@
 
   <!-- ================= NOTES ================= -->
   <aside class="notes">
-    <div class="summary"><b>What changes vs. today, in total</b><span>1. A door under each recommendation card (and a quiet line in the Learn more modal).</span><span>2. The 2-minute teaser itself, four screens.</span><span>3. One strip on the plan picker naming the externship.</span><span>Everything else on this page is exactly what ships today. Exp 3's pre-paywall door comes down when this goes live.</span></div>
+    <div class="summary"><b>What v3 changes vs. v2</b><span>1. All three doors work. Whichever card you enter from leads, but the flow runs across all three.</span><span>2. A lean bar sits in the rail and moves after every swipe, slider and answer.</span><span>3. Six moments (two per externship), two sliders, and the graded call now comes from whichever externship is leading.</span><span>4. The payoff answers the skeptic: real work, real deliverables, the job line, and the skills a recruiter would read. Then the cliffhanger.</span><span>5. If nothing leans, the primary CTA becomes Browse the catalog.</span></div>
 
     <div class="note active" data-note="wall">
       <h4><span>Screen 1</span>The plans page</h4><span class="status touched">Today's page + one door per card</span>
       <ul>
-        <li><b>Reproduced from the live page:</b> italic serif title, "Showing 3 of 20+", three cards with image, title, key focus areas, Learn more (text) and Start now (outline pill), Browse all Projects, and the sticky "3/4 of externs" trial bar.</li>
-        <li><b>The door lives inside the card, below the actions,</b> separated by a dashed rule. Same visual weight as "Learn more", so it reads as a second way to learn, not a third CTA.</li>
-        <li><b>Nothing above it moves.</b> Start now and the trial bar are where they are today. A decided student never meets the teaser. That is the guardrail, visible.</li>
-        <li>Cards without a hand-authored teaser get the generic track version. Prototype wires Attronica only.</li>
+        <li><b>Nothing above the door moves.</b> Start now and the trial bar are exactly where they are today. A decided student never meets the teaser.</li>
+        <li><b>Every door is live.</b> Click Yinan's and Yinan leads the brief; the other two still join. The flow is one artifact, entered from three places.</li>
+        <li><b>The audience is two people.</b> The skeptic who is not sure an externship is worth it, and the believer who is not sure which one. Both are high intent: they signed up, answered the questionnaire, and reached this page.</li>
       </ul>
-      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_eligibility_resolved</code><code>trial_wall_teaser_door_shown {externship_id, matched}</code><code>trial_wall_teaser_door_clicked</code></div>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_eligibility_resolved {arm, externship_ids}</code><code>trial_wall_teaser_door_shown {externship_id}</code><code>trial_wall_teaser_door_clicked {externship_id}</code></div>
     </div>
 
     <div class="note" data-note="learn">
       <h4><span>Screen 2</span>Learn more</h4><span class="status touched">Today's modal + one quiet line</span>
       <ul>
-        <li><b>Reproduced from the live modal:</b> logo, title, overview, image, "What you will learn and accomplish" numbered list, outline Start now.</li>
-        <li><b>One addition:</b> "Try it first · 2 min" under Start now, text-weight, brand blue. A reader who opened the preview is already curious; this is the cheapest place to catch them.</li>
-        <li>Optional. If you'd rather keep the modal untouched, the card door alone is the entry.</li>
+        <li><b>Reproduced from the live modal.</b> One addition under Start now: "Try it first · 2 min", text weight, brand blue.</li>
+        <li>Optional. If you would rather keep the modal untouched, the card door alone is the entry.</li>
       </ul>
-      <div class="events"><span class="eyebrow">Events</span><code>payment_recommendations_learn_more_viewed (existing)</code><code>trial_wall_teaser_door_clicked {from: learn_more}</code></div>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_door_clicked {from: learn_more}</code></div>
     </div>
 
     <div class="note" data-note="brief">
       <h4><span>Screen 3 · ~20s</span>The brief</h4><span class="status newscr">New screen</span>
       <ul>
-        <li><b>Same shell as the live Labs sprint:</b> centered column, progress rail, "Back to projects" top-left. Familiar to anyone who saw Exp 3, cheap to build.</li>
-        <li><b>Priya is real</b> ("Priya Tells You About the Engagement" is substep 1). Naming her turns a syllabus into a job.</li>
-        <li><b>The five-project path</b> is the real module list with Project 1 lit. Length and destination in one glance.</li>
-        <li>One selling line per screen, in the serif with a brand rule. "Not now" sits next to the primary so leaving is never a hunt.</li>
+        <li><b>The clicked externship's real first day,</b> in its manager's words. Priya's closed-door briefing, Mike's Carvana printout, Natoli's thesis. All three are lifted from substep 1 of each curriculum.</li>
+        <li><b>Then the other two join.</b> One dashed box names them and explains the bar. This is the moment the flow turns from "try this one" into "find yours".</li>
+        <li>One selling line per screen. "Not now" sits next to the primary so leaving is never a hunt.</li>
       </ul>
-      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_step_viewed {step: brief}</code></div>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_step_viewed {step: brief, lead}</code></div>
     </div>
 
     <div class="note" data-note="swipe">
-      <h4><span>Screen 4 · ~45s</span>Four swipes</h4><span class="status newscr">New screen</span>
+      <h4><span>Screen 4 · ~1 min</span>Six real moments</h4><span class="status newscr">New screen</span>
       <ul>
-        <li><b>The lab's own deck,</b> four cards instead of eight. Every card is a real moment: the NDA, the 8 ratios, the FP&amp;A write-up, Derek's stress-test. Each names its step.</li>
-        <li>Drag or tap. One answer per card, enforced (the double-tap bug from the engine is fixed).</li>
-        <li>The lean feeds the payoff headline, so the screen after this feels earned.</li>
+        <li><b>Two moments per externship,</b> each a real task from Project 1 or 2 of that curriculum, with a company chip so the learner knows whose job it is.</li>
+        <li><b>Every card names the skill and the role that uses it.</b> That is how "learn the right skills" becomes visible instead of claimed. Skills come from each program's metadata.</li>
+        <li><b>The bar moves on every swipe.</b> A yes adds to that externship; a pass adds nothing. Confidence is built in view.</li>
       </ul>
-      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_step_viewed {step: swipe}</code><code>trial_wall_teaser_card_answered {card, direction}</code></div>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_card_answered {externship_id, card, direction}</code><code>trial_wall_teaser_lean_updated {leader, shares}</code></div>
+    </div>
+
+    <div class="note" data-note="sliders">
+      <h4><span>Screen 5 · ~20s</span>Two sliders</h4><span class="status newscr">New screen</span>
+      <ul>
+        <li><b>The lab's slider mechanic,</b> pointed at the two axes these three jobs actually differ on: the numbers you work with, and whether you value what exists or bet on what's next.</li>
+        <li><b>Each pole is an externship.</b> The bar moves as the thumb moves, so the learner sees the tradeoff before they commit.</li>
+      </ul>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_slider_set {slider, value}</code><code>trial_wall_teaser_lean_updated</code></div>
     </div>
 
     <div class="note" data-note="call">
-      <h4><span>Screen 5 · ~40s</span>One real call</h4><span class="status newscr">New screen</span>
+      <h4><span>Screen 6 · ~30s</span>One real call</h4><span class="status newscr">New screen</span>
       <ul>
-        <li><b>The actual peek.</b> Step 2 of Project 1 is "Calculate the 8 Ratios". One ratio, graded instantly, and the feedback says the real thing is this on Attronica's statements.</li>
-        <li><b>Numbers labelled as the program's worked example,</b> never Attronica's private figures. Final values come from the IES reference company in the curriculum.</li>
-        <li>Wrong answers teach, and the button unlocks either way. A miss at a paywall must not be a dead end.</li>
+        <li><b>The question comes from whichever externship is leading.</b> Attronica: the run-rate vs peak principle from Priya's day-one briefing. Yinan: what set Carvana's $3.55 price. Mangusta: which of three startups fits the fund's real thesis.</li>
+        <li><b>Each is a first principle the curriculum teaches on day one,</b> so the factory can pull the next fourteen from the same callouts.</li>
+        <li>Wrong answers teach, and the button unlocks either way. A miss at a paywall must never be a dead end.</li>
       </ul>
-      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_step_viewed {step: call}</code><code>trial_wall_teaser_call_answered {correct}</code></div>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_call_answered {externship_id, correct}</code></div>
     </div>
 
     <div class="note" data-note="payoff">
-      <h4><span>Screen 6 · ~15s</span>The payoff</h4><span class="status newscr">New screen</span>
+      <h4><span>Screen 7 · ~20s</span>The payoff</h4><span class="status newscr">New screen</span>
       <ul>
-        <li><b>Opens with their lean,</b> then pivots to the four deliverables tagged by project, and where they land: the portfolio, with Attronica's name on it. "What do I get", shown.</li>
-        <li><b>One primary button named after the externship,</b> in the trial bar's own words: "Start your $0 trial with Attronica". It opens today's plan picker with Attronica preselected.</li>
-        <li>"See other projects" is quiet and always there.</li>
+        <li><b>For the believer:</b> the verdict and the final bar, with the runner-up one tap away.</li>
+        <li><b>For the skeptic:</b> the deliverables with the company's name on them, the job line the trial bar already makes, and the skills a recruiter would read on a resume. Real work, shown.</li>
+        <li><b>The cliffhanger</b> is the externship's own open question, unanswered. The trial is where it gets answered.</li>
+        <li><b>If nothing leans</b> (no externship above 40%), the headline says so and the primary becomes Browse the catalog. Honest, and it keeps the flow from forcing a fit.</li>
       </ul>
-      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_completed</code><code>trial_wall_teaser_trial_cta_clicked</code></div>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_completed {leader, shares, no_fit}</code><code>trial_wall_teaser_trial_cta_clicked {externship_id}</code><code>trial_wall_teaser_catalog_clicked</code></div>
     </div>
 
     <div class="note" data-note="plan">
-      <h4><span>Screen 7</span>The plan picker</h4><span class="status touched">Today's modal + one strip</span>
+      <h4><span>Screen 8</span>The plan picker</h4><span class="status touched">Today's modal + one strip</span>
       <ul>
-        <li><b>Reproduced from the live modal:</b> "Choose a plan &amp; start your $0 trial", the two reassurance lines, three plan cards. Plan prices and bullets are placeholders; the modal is not part of the experiment.</li>
-        <li><b>One strip:</b> "Attronica is set as your first project." That preselection already exists in the code (QA-459); this makes it visible so trying flows into starting without a seam.</li>
-        <li><b>Primary metric</b> is who clears this modal. <b>Guardrail:</b> Start now clicks straight from the wall must not drop.</li>
+        <li><b>One strip</b> names the leader as the first project. That preselection already exists in the code; this makes it visible so trying flows into starting without a seam.</li>
+        <li><b>Primary metric</b> is trial starts on the recommendations page, intent to treat. Baseline is 11 in 100 (brain-verified, four clean weeks). <b>Guardrail:</b> Start now clicks straight from the wall must not drop.</li>
       </ul>
       <div class="events"><span class="eyebrow">Events</span><code>existing plan-picker and checkout events, split by arm</code></div>
     </div>
@@ -518,22 +559,124 @@
 
 <script>
 (function(){
+  /* ================= real content, lifted from extern-programs curricula ================= */
+  var EX={
+    attronica:{key:'attronica',mark:'A',name:'Attronica',short:'Attronica',
+      title:'Attronica Financial Planning &amp; Analysis and Private Company Valuation Externship',focus:'FP&amp;A, Valuation, DCF',
+      track:'Financial Planning &amp; Analysis · Project 1 of 5',
+      learn:'Diagnose a real private company\'s financial health, project the AV division five years out, value it with a DCF and comps, and make the case to a buyer.',
+      learnRows:[['Diagnose financial health','Read the three statements and calculate the 8 ratios FP&amp;A analysts use.'],['Build a five-year projection','Project the AV division and defend it under stress-test.'],['Value the division','DCF plus a comparable-companies cross-check.']],
+      head:'Priya closes the door and reads from a printed sheet.',
+      body:'"That\'s Niel. He and his brother built this company." Forty years, from a computer store on K Street to a full IT services firm. Niel is seventy, and he wants the truth about what he has. Priya runs FP&amp;A. You support her. Two questions on his desk: can this business grow, and what is it worth?',
+      path:['Diagnose its financial health','Customer, cost &amp; cash story','Project the AV division','Value it: DCF &amp; comps','Make the case to a buyer'],
+      sell:'This is the actual brief. Not a course about FP&amp;A. <em>The job.</em>',
+      moments:[
+        {g:'🧾',line:'Read five years of a real company\'s financials and tell Priya what\'s healthy and what\'s hiding.',from:'Project 1',skill:'Financial statement analysis',role:'FP&amp;A analyst'},
+        {g:'🗣️',line:'Tell Sales which customers are at risk, and tell Finance why a profitable company is still cash-tight.',from:'Project 2',skill:'Turning numbers into a recommendation',role:'FP&amp;A business partner'}
+      ],
+      call:{eyebrow:'From Priya\'s day-one briefing',title:'Revenue spiked during COVID and has settled back since. Anyone looking at the chart sees a business in decline.',
+        chart:'spike',q:'What\'s the analyst\'s first move?',
+        picks:[{t:'Anchor to normal run-rate revenue, not the peak. Separate what\'s structural from what was a moment in time.',right:true},{t:'Build the projection off the peak. That\'s what the business proved it can do.'},{t:'Call it a decline and recommend cost cuts before the buyer sees it.'}],
+        good:'That\'s the read. It is the first principle Priya teaches on day one, and in Project 1 you apply it to five years of the real statements.',
+        bad:'Not quite. A one-time spike is not a baseline. Build off the peak and every assumption downstream is wrong: growth, margins, valuation.'},
+      artifacts:[['P1','An FP&amp;A diagnostic of a real company, written for its finance lead'],['P3','A five-year projection you defended under stress-test'],['P4','A DCF and a comparable-companies cross-check'],['P5','A four-page recommendation to a buyer']],
+      skills:['Reading real financial statements','Comparing a company to industry peers with ratios','Valuing a business with DCF and comps'],
+      cliff:{q:'Can this business grow? What is it worth?',p:'Two questions on Niel\'s desk, still open. Project 1 opens the statements.'}
+    },
+    yinan:{key:'yinan',mark:'Y',name:'Yinan Zhao',short:'Yinan',
+      title:'Yinan Value Investing &amp; Financial Modeling Externship',focus:'Modeling, Investing',
+      track:'Value Investing · Project 1 of 6',
+      learn:'Pick a company from the Russell 2000 Value, read its 10-K, build the model, set a price target, and write the investment memo alongside a senior research analyst.',
+      learnRows:[['Pick your stock','One company from the 1,400 names Wall Street barely covers.'],['Build the model','A working financial model on real 10-K data, driver by driver.'],['Write the memo','A price target and an investment memo you can defend.']],
+      head:'Mike drops a printout on your desk.',
+      body:'A stock chart with a shape you\'ve never seen: straight up, straight down, then back up further than it started. Carvana. $15 at IPO, $360 at the peak, $3.55 at the bottom, then up 4,000%. Nobody was checking the math. A few analysts did. Yinan is a senior research analyst; your job on his team is to find the next one.',
+      path:['Pick your stock','Read the 10-K','Map the risks','Build the model','Set your price target'],
+      sell:'Roughly 1,400 companies, two or three analysts each, sometimes zero. <em>That\'s where mispricings live.</em>',
+      moments:[
+        {g:'🔎',line:'Pick one company from the 1,400 names in the Russell 2000 Value that Wall Street barely covers, and build its Stock Card.',from:'Project 1',skill:'Investment research',role:'Equity research analyst'},
+        {g:'📄',line:'Open the 10-K, read what\'s actually happening inside the company, and form your own opinion before anyone tells you theirs.',from:'Project 2',skill:'10-K analysis',role:'Equity analyst'}
+      ],
+      call:{eyebrow:'From Mike\'s Carvana printout',title:'Carvana fell 99% to $3.55 a share. The big Wall Street firms had already stopped covering it.',
+        chart:'vee',q:'What set that price?',
+        picks:[{t:'Panic, not analysis. Nobody was checking the math, and the few analysts who did found the gap.',right:true},{t:'The market is efficient. $3.55 was what the business was worth that day.'},{t:'Retail traders. Small caps trade on sentiment, so the number means nothing.'}],
+        good:'That\'s the read. The gap between your number and today\'s price is the margin of safety, the most important idea on this team.',
+        bad:'Not quite. Coverage had gone to zero, so the price was set by panic. The analysts who pulled the filings and checked cash burn against the debt found the gap.'},
+      artifacts:[['P1','A Stock Card on a company you picked'],['P4','A working financial model built on real 10-K data'],['P5','A price target you can defend line by line'],['P6','An investment memo, the kind the sample was built for Alight']],
+      skills:['Targeted research on potential investments','DCF, comparable company and precedent transactions','Presenting an investment case persuasively'],
+      cliff:{q:'Which of the 1,400 is mispriced right now?',p:'Your company is out there, thinly covered. Project 1 is where you pick it.'}
+    },
+    mangusta:{key:'mangusta',mark:'M',name:'Mangusta Capital',short:'Mangusta',
+      title:'Mangusta Capital Deal Sourcing &amp; Startup Analysis Externship',focus:'Venture, Analysis',
+      track:'Venture Capital · Project 1 of 4',
+      learn:'Join a new VC fund launched by a former SoftBank Vision Fund leader and backed by the Ray-Ban and Oakley family. Source vertical AI startups, run due diligence, and write the investment memo.',
+      learnRows:[['Source startups','Decode the fund\'s real thesis and find the companies that fit it.'],['Run due diligence','Team, market, competitors, traction.'],['Write the memo','A three-slide investment memo built for the partners.']],
+      head:'Natoli hands you the fund\'s real investment thesis. Unchanged.',
+      body:'Mangusta Capital was launched by a former SoftBank Vision Fund leader and is backed by the family behind Ray-Ban and Oakley. It backs vertical AI: sector-specific tools for one industry, not general-purpose AI. Natoli is a Principal. Your job as a junior analyst is the first job at every fund: find the startups that fit the thesis before anyone else does.',
+      path:['Source startups','Do due diligence','Synthesize the findings','Write the investment memo'],
+      sell:'Deal flow is the foundation of every VC fund. <em>It starts with someone who knows what to look for.</em>',
+      moments:[
+        {g:'🧭',line:'Decode a real VC fund\'s investment thesis with AI, then go find three startups that fit it.',from:'Project 1',skill:'Deal sourcing',role:'VC analyst'},
+        {g:'🧪',line:'Run due diligence on your startup: team, market size, competitors, traction. Then write the synergy report.',from:'Projects 2 and 3',skill:'Due diligence',role:'Investment analyst'}
+      ],
+      call:{eyebrow:'From Natoli\'s thesis-fit checklist',title:'Three startups land in your inbox on day one.',
+        chart:'inbox',q:'Which one fits Mangusta\'s thesis?',
+        picks:[{t:'A Series A company building AI underwriting for small-business lenders.',right:true},{t:'A general-purpose chatbot competing head on with ChatGPT.'},{t:'A Series D logistics company raising a growth round.'}],
+        good:'That\'s the one. Vertical AI at the application layer, seed or Series A, in a target sector like fintech. That is the checklist Natoli gives you in Project 1.',
+        bad:'Not quite. The fund passes on general-purpose AI and on late stages. It wants application-layer AI for one industry, at seed or Series A.'},
+      artifacts:[['P1','A sourced shortlist that fits a real fund\'s thesis'],['P2','A due-diligence folder on your startup'],['P3','Synthesis reports, including the synergy report'],['P4','A three-slide investment memo for the partners']],
+      skills:['Identifying high-potential vertical AI startups','Due diligence summaries and synthesis reports','Research and communication on real startup data'],
+      cliff:{q:'Which startup deserves a closer look?',p:'The thesis is on your desk. The company isn\'t found yet. Project 1 is where you find it.'}
+    }
+  };
+  var ORDER=['attronica','yinan','mangusta'];
+  var SLIDERS=[
+    {q:'The numbers I\'d rather work with',left:{ex:'attronica',t:'Handed to me by the company. Nobody outside has seen them.'},right:{ex:'yinan',t:'Public filings, and I hunt for what the market missed.'}},
+    {q:'The question I\'d rather answer',left:{ex:'yinan',t:'What is this business really worth today?'},right:{ex:'mangusta',t:'Which of these could be huge in five years?'}}
+  ];
+
+  /* ================= state ================= */
   var frame=document.getElementById('frame');
   var screens={};document.querySelectorAll('.screen').forEach(function(s){screens[s.dataset.screen]=s});
   var notes={};document.querySelectorAll('.note').forEach(function(n){notes[n.dataset.note]=n});
   var stepBtns=document.querySelectorAll('#steps button');
+  var lead='attronica', scores={}, answers=[], sliderVals=[0,0], sliderTouched=[false,false], callEx=null, callCorrect=null;
+  var deckBuilt=false, cursor=0, busy=false, CARDS=[];
+  function resetScores(){ scores={attronica:0,yinan:0,mangusta:0}; answers=[]; sliderVals=[0,0]; sliderTouched=[false,false]; callEx=null; callCorrect=null; deckBuilt=false; cursor=0; busy=false; }
+  resetScores();
 
+  /* ================= lean maths ================= */
+  function shares(){ var t=0; ORDER.forEach(function(k){t+=scores[k]}); var s={}; ORDER.forEach(function(k){ s[k]= t>0 ? scores[k]/t : 1/3; }); return {s:s,total:t}; }
+  function leader(){ var sh=shares().s, best=lead, bv=-1; ORDER.forEach(function(k){ if(sh[k]>bv+1e-9){bv=sh[k];best=k;} }); return best; }
+  function runnerUp(){ var sh=shares().s, L=leader(), best=null, bv=-1; ORDER.forEach(function(k){ if(k!==L&&sh[k]>bv){bv=sh[k];best=k;} }); return best; }
+  function yesCount(){ return answers.filter(function(a){return a==='right'}).length; }
+  function noFit(){ var x=shares(); return x.total<3 || (yesCount()===0 && cursor>0) || (yesCount()<=2 && x.s[leader()]<0.40); }
+  function closeRace(){ var x=shares().s, L=leader(), R=runnerUp(); return R && (x[L]-x[R])<0.08; }
+  function renderLean(){ var x=shares(), L=leader();
+    document.querySelectorAll('[data-lean]').forEach(function(w){
+      if(!w.dataset.built){ w.dataset.built='1'; w.innerHTML='<div class="cap"><span>How you\'re leaning</span><b></b></div><div class="stackbar">'+ORDER.map(function(k){return '<i data-ex="'+k+'"></i>'}).join('')+'</div><div class="legend3">'+ORDER.map(function(k){return '<span data-ex="'+k+'"></span>'}).join('')+'</div>'; }
+      w.querySelector('.cap b').textContent= x.total===0 ? 'Even, so far' : (noFit()? 'Nothing clear yet' : (closeRace()? EX[L].short+' narrowly ahead' : EX[L].short+' is ahead'));
+      ORDER.forEach(function(k){ w.querySelector('.stackbar i[data-ex="'+k+'"]').style.width=(x.s[k]*100)+'%';
+        var lg=w.querySelector('.legend3 span[data-ex="'+k+'"]'); lg.textContent=EX[k].short+' '+Math.round(x.s[k]*100)+'%'; lg.classList.toggle('lead', x.total>0 && k===L && !noFit()); });
+    }); }
+
+  /* ================= navigation ================= */
   function go(name){
     Object.keys(screens).forEach(function(k){screens[k].classList.toggle('active',k===name)});
     Object.keys(notes).forEach(function(k){notes[k].classList.toggle('active',k===name)});
     stepBtns.forEach(function(b){b.classList.toggle('on',b.dataset.go===name)});
     screens[name].scrollTop=0;
+    if(name==='wall') { resetScores(); renderWall(); }
+    if(name==='learn') renderLearn();
+    if(name==='brief') renderBrief();
     if(name==='swipe'&&!deckBuilt) buildDeck();
+    if(name==='sliders') renderSliders();
+    if(name==='call') renderCall();
     if(name==='payoff') renderPayoff();
-    if(name==='wall') resetAll();
+    if(name==='plan') renderPlan();
+    renderLean();
   }
   document.addEventListener('click',function(e){
-    var t=e.target.closest('[data-go]'); if(!t||t.disabled) return; go(t.dataset.go);
+    var t=e.target.closest('[data-go]'); if(!t||t.disabled) return; if(t.dataset.ex){ lead=t.dataset.ex; } go(t.dataset.go);
   });
   document.querySelectorAll('#mode button').forEach(function(b){b.addEventListener('click',function(){
     document.querySelectorAll('#mode button').forEach(function(x){x.classList.toggle('on',x===b)});
@@ -543,45 +686,95 @@
     document.querySelectorAll('#device button').forEach(function(x){x.classList.toggle('on',x===b)});
     frame.classList.toggle('mobile',b.dataset.device==='mobile');
   })});
-  document.querySelectorAll('#doorstyle button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#doorstyle button').forEach(function(x){x.classList.toggle('on',x===b)});frame.classList.toggle('door-inline',b.dataset.door==='inline');})});
   document.getElementById('markNew').addEventListener('change',function(e){frame.classList.toggle('hl',e.target.checked)});
 
-  var CARDS=[
-    {g:'🧾',line:"Sign the NDA and open Attronica's real income statement, balance sheet and cash flow.",from:'Project 1 · Step 1'},
-    {g:'📐',line:'Calculate the 8 ratios FP&A analysts actually use, on Attronica’s numbers, with Claude as your partner.',from:'Project 1 · Step 2'},
-    {g:'✍️',line:"Write the FP&A read: what's wrong, and what you'd tell the CFO to do about it.",from:'Project 1 · Step 3'},
-    {g:'🛡️',line:'Build a five-year projection for the AV division and defend it to Derek, who stress-tests growth plans for a living.',from:'Project 3 · Step 4'}
-  ];
+  /* ================= screen 1 ================= */
+  function renderWall(){ var c=document.getElementById('cards'); c.innerHTML=ORDER.map(function(k){ var e=EX[k]; return '<article class="rcard"><div class="img">▨<span class="co">'+e.name+'</span></div><div class="body"><h3>'+e.title+'</h3><div class="focus"><span>Key focus areas</span><b>'+e.focus+'</b></div><div class="actions"><button class="btn btn-quiet" type="button" data-go="learn" data-ex="'+k+'">Learn more</button><button class="btn btn-outline" type="button" data-go="plan" data-ex="'+k+'">Start now</button></div><button class="door new" type="button" data-go="brief" data-ex="'+k+'"><span class="ic">▶</span><span class="t"><b>Try it first · 2 min</b><small>Two real moments, one real call. Then see which of your three fits.</small></span><span class="arrow">→</span></button></div></article>'; }).join(''); }
+  renderWall();
+
+  /* ================= screen 2 ================= */
+  function renderLearn(){ var e=EX[lead]; document.getElementById('learnTitle').innerHTML=e.title; document.getElementById('learnBody').innerHTML=e.learn;
+    document.getElementById('learnRows').innerHTML=e.learnRows.map(function(r,i){return '<div class="row"><span class="n">'+(i+1)+'</span><div><b>'+r[0]+'</b><span>'+r[1]+'</span></div></div>'}).join('');
+    document.querySelector('[data-screen="learn"] [data-go="brief"]').dataset.ex=lead; }
+
+  /* ================= screen 3 ================= */
+  function renderBrief(){ var e=EX[lead]; document.getElementById('briefMark').textContent=e.mark; document.getElementById('briefName').innerHTML=e.name; document.getElementById('briefTrack').innerHTML=e.track;
+    document.getElementById('briefHead').innerHTML=e.head; document.getElementById('briefBody').innerHTML=e.body;
+    document.getElementById('briefPath').innerHTML=e.path.map(function(p,i){return '<div'+(i===0?' class="now"':'')+'>'+p+'</div>'}).join('');
+    document.getElementById('briefPath').style.gridTemplateColumns='repeat('+e.path.length+',1fr)';
+    document.getElementById('briefSell').innerHTML=e.sell;
+    document.getElementById('otherRows').innerHTML=ORDER.filter(function(k){return k!==lead}).map(function(k){var o=EX[k]; return '<div class="row"><div class="mark" data-ex="'+k+'">'+o.mark+'</div><div><b>'+o.name+'</b><br><span>'+o.track.split(' · ')[0]+'</span></div></div>'}).join(''); }
+
+  /* ================= screen 4 · swipes ================= */
   var deck=document.getElementById('deck'), counter=document.getElementById('counter');
-  var cursor=0, answers=[], deckBuilt=false, busy=false;
-  function buildDeck(){ deckBuilt=true; deck.innerHTML=''; cursor=0; answers=[]; busy=false; counter.textContent='0 / 4';
+  function buildDeck(){ deckBuilt=true; deck.innerHTML=''; cursor=0; answers=[]; busy=false;
+    var ord=[lead].concat(ORDER.filter(function(k){return k!==lead})); CARDS=[];
+    [0,1].forEach(function(i){ ord.forEach(function(k){ var m=EX[k].moments[i]; CARDS.push({ex:k,g:m.g,line:m.line,from:m.from,skill:m.skill,role:m.role}); }); });
+    counter.textContent='0 / '+CARDS.length;
     for(var i=CARDS.length-1;i>=0;i--){ deck.appendChild(makeCard(CARDS[i],i)); } layout(); }
   function makeCard(c,i){ var el=document.createElement('div'); el.className='card'; el.dataset.i=i;
-    el.innerHTML='<div class="stamp yes">Yes</div><div class="stamp no">Pass</div><div class="glyph">'+c.g+'</div><div class="line">'+c.line+'</div><div class="from">From <b>'+c.from+'</b> of the real curriculum</div>'; return el; }
+    el.innerHTML='<div class="stamp yes">Yes</div><div class="stamp no">Pass</div><div class="top"><span class="chip" data-ex="'+c.ex+'">'+EX[c.ex].short+'</span><span class="glyph" style="font-size:30px">'+c.g+'</span></div><div class="line">'+c.line+'</div><div class="tag"><b>'+c.skill+' · '+c.role+'</b><span>From <b>'+c.from+'</b> of the real curriculum</span></div>'; return el; }
   function layout(){ deck.querySelectorAll('.card').forEach(function(el){ var i=+el.dataset.i, depth=i-cursor; el.classList.remove('d1','d2'); if(depth<0) return;
     if(depth===0){ el.style.zIndex=30; attachDrag(el); } else if(depth===1){ el.classList.add('d1'); el.style.zIndex=20; } else { el.classList.add('d2'); el.style.zIndex=10; } }); }
   function resolve(dir){ if(busy) return; var el=deck.querySelector('.card[data-i="'+cursor+'"]'); if(!el) return; busy=true; answers[cursor]=dir; el.classList.remove('dragging');
+    if(dir==='right'){ scores[CARDS[cursor].ex]+=2; renderLean(); }
     el.style.transform='translateX('+(dir==='right'?600:-600)+'px) rotate('+(dir==='right'?18:-18)+'deg)'; el.style.opacity='0';
-    el.querySelector('.stamp.'+(dir==='right'?'yes':'no')).style.opacity='1'; cursor++; counter.textContent=Math.min(cursor,4)+' / 4';
-    setTimeout(function(){ el.remove(); busy=false; layout(); if(cursor>=CARDS.length){ setTimeout(function(){go('call')},250); } },290); }
+    el.querySelector('.stamp.'+(dir==='right'?'yes':'no')).style.opacity='1'; cursor++; counter.textContent=Math.min(cursor,CARDS.length)+' / '+CARDS.length;
+    setTimeout(function(){ el.remove(); busy=false; layout(); if(cursor>=CARDS.length){ setTimeout(function(){go('sliders')},250); } },290); }
   document.getElementById('btnYes').addEventListener('click',function(){resolve('right')});
   document.getElementById('btnNo').addEventListener('click',function(){resolve('left')});
   function attachDrag(el){ if(el.dataset.drag) return; el.dataset.drag='1'; var sx=0,dx=0,down=false; var yes=el.querySelector('.stamp.yes'), no=el.querySelector('.stamp.no');
     el.addEventListener('pointerdown',function(e){ if(busy) return; down=true; sx=e.clientX; dx=0; el.classList.add('dragging'); el.setPointerCapture(e.pointerId); });
-    el.addEventListener('pointermove',function(e){ if(!down) return; dx=e.clientX-sx; el.style.transform='translateX('+dx+'px) rotate('+(dx/18)+'deg)'; var p=Math.min(1,Math.abs(dx)/120); yes.style.opacity=dx>10?p:0; no.style.opacity=dx<-10?p:0; yes.style.transform='rotate(8deg) scale('+(0.8+0.2*p)+')'; no.style.transform='rotate(-8deg) scale('+(0.8+0.2*p)+')'; });
+    el.addEventListener('pointermove',function(e){ if(!down) return; dx=e.clientX-sx; el.style.transform='translateX('+dx+'px) rotate('+(dx/18)+'deg)'; var p=Math.min(1,Math.abs(dx)/120); yes.style.opacity=dx>10?p:0; no.style.opacity=dx<-10?p:0; });
     function end(){ if(!down) return; down=false; el.classList.remove('dragging'); if(dx>100) resolve('right'); else if(dx<-100) resolve('left'); else { el.style.transform=''; yes.style.opacity=0; no.style.opacity=0; } }
     el.addEventListener('pointerup',end); el.addEventListener('pointercancel',end); }
 
-  var picks=document.querySelectorAll('#picks .pick'), vGood=document.getElementById('vGood'), vBad=document.getElementById('vBad'), toPayoff=document.getElementById('toPayoff');
-  picks.forEach(function(p){ p.addEventListener('click',function(){ picks.forEach(function(q){ q.disabled=true; });
-    if(p.dataset.right){ p.classList.add('right'); vGood.classList.add('show'); } else { p.classList.add('wrong'); vBad.classList.add('show'); picks.forEach(function(q){ if(q.dataset.right) q.classList.add('right'); }); }
-    toPayoff.disabled=false; }); });
+  /* ================= screen 5 · sliders ================= */
+  var sliderBase=null;
+  function renderSliders(){ var wrap=document.getElementById('sliders'); if(sliderBase===null){ sliderBase={attronica:scores.attronica,yinan:scores.yinan,mangusta:scores.mangusta}; }
+    wrap.innerHTML=SLIDERS.map(function(s,i){ return '<div class="slider"><div class="q">'+s.q+'</div><input type="range" min="-100" max="100" value="'+(sliderVals[i]*100)+'" data-i="'+i+'" aria-label="'+s.q+'"><div class="poles"><div><span class="chip" data-ex="'+s.left.ex+'">'+EX[s.left.ex].short+'</span><span>'+s.left.t+'</span></div><div><span class="chip" data-ex="'+s.right.ex+'">'+EX[s.right.ex].short+'</span><span>'+s.right.t+'</span></div></div><div class="state" id="sstate'+i+'">'+(sliderTouched[i]?'':'Drag the thumb')+'</div></div>'; }).join('');
+    wrap.querySelectorAll('input[type=range]').forEach(function(r){ r.addEventListener('input',function(){ var i=+r.dataset.i, v=+r.value/100; sliderVals[i]=v; sliderTouched[i]=true; applySliders(); var st=document.getElementById('sstate'+i); var s=SLIDERS[i]; st.textContent= Math.abs(v)<0.15 ? 'Right in the middle' : (v<0 ? 'Leaning '+EX[s.left.ex].short : 'Leaning '+EX[s.right.ex].short); document.getElementById('toCall').disabled=!(sliderTouched[0]&&sliderTouched[1]); }); });
+    document.getElementById('toCall').disabled=!(sliderTouched[0]&&sliderTouched[1]); applySliders(); }
+  function applySliders(){ ORDER.forEach(function(k){ scores[k]=sliderBase[k]; }); SLIDERS.forEach(function(s,i){ var v=sliderVals[i]; scores[s.left.ex]+=(1-v); scores[s.right.ex]+=(1+v); }); renderLean(); }
 
-  function renderPayoff(){ var yes=answers.filter(function(a){return a==='right'}).length; var words=['none','one','two','three','four'];
-    document.getElementById('payoffHead').textContent= yes===0 ? "Not one of those days pulled you in." : 'You said yes to '+yes+' of 4 days.';
-    document.getElementById('leanText').textContent= yes===0 ? 'Fair enough. Here is what the work leads to anyway.' : (yes===4 ? 'Every moment pulled you in' : words[yes].charAt(0).toUpperCase()+words[yes].slice(1)+' of the four moments pulled you in');
-    var bar=document.getElementById('leanBar'); bar.style.width='0'; requestAnimationFrame(function(){ setTimeout(function(){ bar.style.width=(yes/4*100)+'%'; },30); }); }
-  function resetAll(){ deckBuilt=false; cursor=0; answers=[]; busy=false; picks.forEach(function(q){ q.disabled=false; q.classList.remove('right','wrong'); }); vGood.classList.remove('show'); vBad.classList.remove('show'); toPayoff.disabled=true; }
+  /* ================= screen 6 · the call ================= */
+  function renderCall(){ callEx=leader(); var e=EX[callEx], c=e.call, col=document.getElementById('callCol'); callCorrect=null;
+    var vis='';
+    if(c.chart==='spike'){ vis='<div class="chart"><svg viewBox="0 0 320 100" preserveAspectRatio="none"><polyline fill="none" stroke="#2853d2" stroke-width="3" points="0,70 40,68 80,66 120,64 150,18 180,22 210,58 250,62 290,60 320,61"/><line x1="0" y1="66" x2="320" y2="66" stroke="#c9c6c5" stroke-dasharray="4 4"/></svg><span class="cap">Revenue, the last several years. Values withheld, the shape is the point.</span></div>'; }
+    else if(c.chart==='vee'){ vis='<div class="chart"><svg viewBox="0 0 320 100" preserveAspectRatio="none"><polyline fill="none" stroke="#006e20" stroke-width="3" points="0,80 60,60 110,10 150,30 190,92 230,70 280,40 320,6"/></svg><span class="cap">The printout Mike drops on your desk. IPO, peak, bottom, and the 4,000% climb.</span></div>'; }
+    else { vis='<div class="inbox"><div class="pick" style="cursor:default"><span class="k">1</span><span>Series A · AI underwriting for small-business lenders · U.S.</span></div><div class="pick" style="cursor:default"><span class="k">2</span><span>Seed · a general-purpose assistant that competes with ChatGPT</span></div><div class="pick" style="cursor:default"><span class="k">3</span><span>Series D · logistics platform, raising a growth round</span></div></div>'; }
+    col.innerHTML='<div class="stack" style="gap:6px"><span class="chip" data-ex="'+callEx+'">'+e.short+(closeRace()?' is narrowly ahead':' is ahead')+', so the call is theirs</span><span class="eyebrow">'+c.eyebrow+'</span><h3 class="title">'+c.title+'</h3></div>'+vis+'<p class="body"><b>'+c.q+'</b></p><div class="picks" id="picks">'+c.picks.map(function(p,i){return '<button class="pick" type="button"'+(p.right?' data-right="1"':'')+'><span class="k">'+String.fromCharCode(65+i)+'</span><span>'+p.t+'</span></button>'}).join('')+'</div><div class="verdict good" id="vGood"><b>'+c.good.split('. ')[0]+'.</b> '+c.good.split('. ').slice(1).join('. ')+'</div><div class="verdict bad" id="vBad"><b>'+c.bad.split('. ')[0]+'.</b> '+c.bad.split('. ').slice(1).join('. ')+'</div><div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" id="toPayoff" data-go="payoff" disabled>See what you\'d walk away with →</button></div></div>';
+    var picks=col.querySelectorAll('.pick[data-right], .pick:not([style])'); var vGood=document.getElementById('vGood'), vBad=document.getElementById('vBad'), toPayoff=document.getElementById('toPayoff');
+    col.querySelectorAll('#picks .pick').forEach(function(p){ p.addEventListener('click',function(){ col.querySelectorAll('#picks .pick').forEach(function(q){ q.disabled=true; });
+      if(p.dataset.right){ p.classList.add('right'); vGood.classList.add('show'); callCorrect=true; scores[callEx]+=1; renderLean(); } else { p.classList.add('wrong'); vBad.classList.add('show'); callCorrect=false; col.querySelectorAll('#picks .pick').forEach(function(q){ if(q.dataset.right) q.classList.add('right'); }); }
+      toPayoff.disabled=false; }); }); }
+
+  /* ================= screen 7 · payoff ================= */
+  function renderPayoff(){ var col=document.getElementById('payCol'), x=shares(), L=leader(), R=runnerUp(), e=EX[L], nf=noFit();
+    var yesL=CARDS.filter(function(c,i){return c.ex===L&&answers[i]==='right'}).length;
+    var head, sub;
+    if(nf){ head='None of the three pulled you in enough to call it.'; sub='That is useful to know before you pay. There are 20+ projects on the catalog, and the questionnaire can be retaken.'; }
+    else if(closeRace()){ head=e.short+' by a nose, '+Math.round(x.s[L]*100)+'% of the lean.'; sub= yesCount()>=5 ? 'All three pulled you in, which is a good problem. The sliders tipped it to '+e.short+'.' : 'It was close. '+EX[R].short+' was right behind, and it is one tap away below.'; }
+    else { head=e.short+' is yours, '+Math.round(x.s[L]*100)+'% of the lean.'; sub= yesL===2 ? 'Both of its moments got a yes, and the sliders agreed.' : (yesL===1 ? 'One of its moments got a yes, and the sliders carried the rest.' : 'The sliders carried it. Its moments were a pass, which is worth noticing.'); }
+    var leanBlock='<div class="leanwrap show" data-lean></div>';
+    var proof='<div class="stack" style="gap:8px"><span class="eyebrow">What you\'d walk away with from '+e.short+'</span><div class="artifacts">'+e.artifacts.map(function(a){return '<div><span class="p">'+a[0]+'</span><span>'+a[1]+'</span></div>'}).join('')+'</div><div class="portfolio"><div class="thumb"></div><span>All of it lands on your portfolio page, with '+e.name+'\'s name on it.</span></div></div>'+
+      '<div class="proof"><div class="box"><span class="eyebrow">What a recruiter reads</span><ul>'+e.skills.map(function(s){return '<li>'+s+'</li>'}).join('')+'</ul></div><div class="box"><span class="eyebrow">Where it leads</span><div class="big"><b>3 in 4</b> externs find a job outcome within a year</div><span style="font-size:12px;color:var(--text-muted)">Same claim as the trial bar. Real work, on your portfolio, with the company\'s name on it.</span></div></div>';
+    var cliff='<div class="cliff new"><span class="eyebrow">Still open</span><div class="q">'+e.cliff.q+'</div><p>'+e.cliff.p+'</p></div>';
+    var runner= R ? '<div class="runner"><span>'+EX[R].short+' was next at '+Math.round(x.s[R]*100)+'%.</span><button type="button" data-go="plan" data-ex="'+R+'">Start there instead</button></div>' : '';
+    var ctas= nf ? '<div class="cta-row"><button class="btn btn-primary" type="button" data-go="wall">Browse the catalog →</button><button class="btn btn-quiet" type="button" data-go="plan" data-ex="'+L+'">Start with '+e.short+' anyway</button></div>'
+                 : '<div class="cta-row"><button class="btn btn-primary" type="button" data-go="plan" data-ex="'+L+'">Start your $0 trial with '+e.short+' →</button><button class="btn btn-quiet" type="button" data-go="wall">See other projects</button></div>';
+    col.innerHTML='<div class="payhead"><h2 class="display">'+head+'</h2><p class="sub">'+sub+'</p></div>'+leanBlock+(nf?'':proof+cliff+runner)+(nf?'<div class="stack" style="gap:8px"><span class="eyebrow">What every externship still gives you</span><div class="proof"><div class="box"><span class="eyebrow">Real work</span><ul><li>A real company, a real manager, real deliverables</li><li>On your portfolio, with the company\'s name on it</li></ul></div><div class="box"><span class="eyebrow">Where it leads</span><div class="big"><b>3 in 4</b> externs find a job outcome within a year</div></div></div></div>':'')+'<div class="stack push">'+ctas+'</div>';
+    renderLean(); }
+
+  /* ================= screen 8 ================= */
+  var planEx=null;
+  function renderPlan(){ var e=EX[planEx]||EX[leader()]; document.getElementById('planMark').textContent=e.mark; document.getElementById('planName').innerHTML=e.name; }
+
+  /* the plan strip names whichever externship the click carried, else the leader */
+  document.addEventListener('click',function(e){ var t=e.target.closest('[data-go="plan"]'); if(t){ planEx= t.dataset.ex || null; } },true);
+
+  /* reset sliders base when the deck restarts */
+  var _go=go; go=function(n){ if(n==='wall'){ sliderBase=null; } _go(n); };
 })();
 </script>
 </body>

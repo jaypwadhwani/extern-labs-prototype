@@ -1,0 +1,588 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Try One Before You Buy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --canvas:#fdf8f8; --surface:#ffffff; --surface-subtle:#f4f0ef; --border:#e5e2e1; --border-strong:#c9c6c5;
+    --text:#1c1b1b; --text-subtle:#484646; --text-muted:#797676;
+    --brand:#2853d2; --brand-subtle:#dce1ff; --on-brand:#fefbff; --brand-deep:#001d69;
+    --success:#006e20; --success-subtle:#c8ffc1; --danger:#dc2626; --danger-subtle:#ffd9d9;
+    --warning:#cc7015; --warning-subtle:#ffd1a3; --inverse:#262625;
+    --new:#2853d2;
+    --serif:"Instrument Serif", Georgia, "Times New Roman", serif;
+    --sans:Inter, -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:#efeae9;color:var(--text);font-family:var(--sans);font-size:15px;line-height:1.45;-webkit-font-smoothing:antialiased}
+  button{font:inherit;cursor:pointer}
+  button:focus-visible,a:focus-visible{outline:2px solid #6989ff;outline-offset:2px}
+  p{margin:0}
+
+  /* ================= review chrome ================= */
+  .review{max-width:1500px;margin:0 auto;padding:22px 20px 60px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+  @media (max-width:1100px){.review{grid-template-columns:1fr}}
+  .mast{grid-column:1/-1;display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap;border-bottom:1px solid #d9d4d3;padding-bottom:14px}
+  .mast h1{font-family:var(--serif);font-weight:400;font-size:30px;margin:0;letter-spacing:-.3px}
+  .mast h1 em{font-style:italic;color:var(--brand)}
+  .mast .sub{color:var(--text-subtle);font-size:14px;max-width:70ch}
+  .kicker{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500}
+  .toolbar{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+  .seg{display:inline-flex;border:1px solid #d9d4d3;border-radius:100px;background:#fff;padding:3px}
+  .seg button{border:0;background:none;border-radius:100px;padding:6px 14px;font-size:13px;color:var(--text-subtle)}
+  .seg button.on{background:var(--text);color:#fff}
+  .steps{display:flex;gap:6px;flex-wrap:wrap}
+  .steps button{border:1px solid #d9d4d3;background:#fff;border-radius:100px;padding:6px 12px;font-size:13px;color:var(--text-subtle)}
+  .steps button.on{border-color:var(--brand);color:var(--brand);background:#f5f7ff}
+  .steps button .n{display:inline-block;min-width:16px;font-size:11px;color:var(--text-muted);margin-right:4px}
+  .legend{display:flex;gap:14px;align-items:center;font-size:12px;color:var(--text-muted)}
+  .legend i{display:inline-block;width:14px;height:14px;border:2px dashed var(--new);border-radius:4px;vertical-align:-2px;margin-right:5px}
+
+  /* ================= device frame ================= */
+  .frame{background:var(--canvas);border:1px solid #d9d4d3;border-radius:22px;overflow:hidden;box-shadow:0 30px 60px -36px rgba(28,27,27,.45);position:relative;margin:0 auto;width:100%;max-width:1180px;min-height:760px;display:flex;flex-direction:column}
+  .frame.mobile{max-width:393px;border-radius:34px;min-height:820px}
+  .appbar{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--border);background:#fff;flex-shrink:0}
+  .appbar .logo{font-family:var(--serif);font-size:24px;letter-spacing:-.2px}
+  .appbar .logo b{color:var(--success);font-weight:400}
+  .iconbtn{width:40px;height:40px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:var(--text);background:none;border:0;font-size:18px}
+  .viewport{flex:1;position:relative;display:flex;flex-direction:column;overflow:hidden}
+  .screen{display:none;flex:1;flex-direction:column;overflow-y:auto;overflow-x:hidden}
+  .screen.active{display:flex}
+
+  /* proposed-only elements */
+  .new{position:relative}
+  .frame.today .new{display:none !important}
+  .frame.hl .new{outline:2px dashed var(--new);outline-offset:3px;border-radius:12px}
+  .frame.hl .new:after{content:"NEW";position:absolute;top:-9px;left:10px;background:var(--new);color:#fff;font-size:9px;letter-spacing:.14em;padding:2px 6px;border-radius:4px;font-weight:600;z-index:5}
+
+  /* ================= plans page (today) ================= */
+  .plans{padding:32px 24px 140px;display:flex;flex-direction:column;gap:32px;align-items:center;background:radial-gradient(60% 40% at 50% 12%,#e6e9ff 0%,rgba(230,233,255,0) 70%)}
+  .frame.mobile .plans{padding:24px 16px 150px;gap:22px}
+  .plans-head{text-align:center;display:flex;flex-direction:column;gap:10px}
+  .plans-head h2{font-family:var(--serif);font-style:italic;font-weight:400;font-size:52px;line-height:1.05;margin:0;letter-spacing:-.6px}
+  .frame.mobile .plans-head h2{font-size:38px}
+  .plans-head p{font-size:18px;color:var(--text-subtle)}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;width:100%;max-width:1061px}
+  .frame.mobile .cards{grid-template-columns:1fr;gap:16px}
+  .rcard{background:#fff;border:1px solid var(--border);border-radius:24px;overflow:hidden;display:flex;flex-direction:column}
+  .rcard .img{height:208px;background:#e9e6e5;display:flex;align-items:center;justify-content:center;color:#c4c0bf;position:relative}
+  .rcard .img .co{position:absolute;left:14px;bottom:12px;background:#fff;border:1px solid var(--border);border-radius:8px;padding:4px 8px;font-size:12px;font-weight:500;color:var(--text)}
+  .rcard .body{padding:20px 20px 20px;display:flex;flex-direction:column;gap:14px;flex:1}
+  .rcard h3{margin:0;font-size:18px;font-weight:500;line-height:1.35;letter-spacing:-.2px}
+  .rcard .focus{display:flex;flex-direction:column;gap:2px}
+  .rcard .focus span{font-size:12px;color:var(--text-muted)}
+  .rcard .focus b{font-size:12px;font-weight:500}
+  .rcard .actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;height:44px;padding:0 20px;white-space:nowrap;border-radius:100px;border:1px solid transparent;font-weight:500;font-size:15px;text-decoration:none;background:none;color:var(--text)}
+  .btn-outline{border-color:var(--border-strong);background:#fff}
+  .btn-primary{background:var(--brand);color:var(--on-brand);height:48px}
+  .btn-quiet{padding:0 8px}
+  .btn-block{width:100%}
+  .btn[disabled]{opacity:.4;cursor:default}
+  .door{display:flex;align-items:center;gap:10px;border-top:1px dashed var(--border);padding-top:12px;text-align:left;background:none;border-left:0;border-right:0;border-bottom:0;width:100%;color:var(--brand)}
+  .door .ic{width:28px;height:28px;border-radius:50%;background:var(--brand-subtle);color:var(--brand);display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .door .t{display:flex;flex-direction:column;gap:1px}
+  .door b{font-weight:500;font-size:14px}
+  .door small{font-size:12px;color:var(--text-muted)}
+  .door .arrow{margin-left:auto;color:var(--brand)}
+  .door.quiet{opacity:.45;cursor:default}
+  .browse{border:1px solid var(--border-strong);background:#fff;border-radius:100px;height:40px;padding:0 20px;font-size:15px}
+  .frame.mobile .browse{width:100%;height:44px}
+  .trialbar{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--border);padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;box-shadow:0 -6px 24px -12px rgba(28,27,27,.2);z-index:20}
+  .trialbar .who{display:flex;align-items:center;gap:12px;font-size:17px}
+  .avatars{display:flex}
+  .avatars i{width:32px;height:32px;border-radius:50%;border:2px solid #fff;background:#b9b3b1;margin-left:-8px;display:block}
+  .avatars i:first-child{margin-left:0}
+  .trialbar .who b{color:var(--brand);font-weight:500}
+  .frame.mobile .trialbar{flex-direction:column;align-items:stretch;padding:12px 16px}
+  .frame.mobile .trialbar .who{font-size:15px;justify-content:space-between}
+  .frame.mobile .trialbar .btn-primary{width:100%;height:44px}
+
+
+  /* door placement variants */
+  .inline-door{display:none;align-items:center;gap:6px;color:var(--brand);font-weight:500;font-size:14px;background:none;border:0;padding:0 6px;white-space:nowrap}
+  .inline-door .ic{width:22px;height:22px;border-radius:50%;background:var(--brand-subtle);display:inline-flex;align-items:center;justify-content:center;font-size:10px}
+  .frame.door-inline .door{display:none !important}
+  .frame.door-inline .inline-door{display:inline-flex}
+  .frame.mobile.door-inline .inline-door{font-size:13px;padding:0 2px}
+
+  /* ================= modals ================= */
+  .scrim{position:absolute;inset:0;background:rgba(28,27,27,.12);backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:30}
+  .modal{background:#fff;border-radius:24px;border:1px solid var(--border);width:100%;max-width:580px;max-height:100%;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:18px;box-shadow:0 30px 60px -30px rgba(28,27,27,.45)}
+  .modal.wide{max-width:1110px;padding:28px 24px 24px}
+  .modal .mh{display:flex;align-items:flex-start;gap:14px}
+  .modal .mh .co{width:48px;height:48px;border-radius:50%;background:#efecec;flex-shrink:0}
+  .modal .mh h3{margin:0;font-size:18px;font-weight:500;line-height:1.35;flex:1}
+  .modal .x{width:32px;height:32px;border-radius:50%;border:1px solid var(--border-strong);background:#fff;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+  .modal .hero{height:170px;background:#e9e6e5;border-radius:12px}
+  .modal h4{margin:0;font-size:17px;font-weight:500;color:var(--text-subtle)}
+  .learn{display:flex;flex-direction:column;gap:14px}
+  .learn .row{display:flex;gap:12px}
+  .learn .n{width:30px;height:30px;border-radius:50%;background:var(--surface-subtle);display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+  .learn .row b{font-weight:500;display:block}
+  .learn .row span{color:var(--text-subtle);font-size:15px}
+  .modal .foot{display:flex;flex-direction:column;gap:8px}
+  .plans-modal-head{text-align:center;display:flex;flex-direction:column;gap:10px}
+  .plans-modal-head h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:40px;margin:0;line-height:1.05}
+  .plans-modal-head p{color:var(--text-subtle);font-size:16px}
+  .frame.mobile .plans-modal-head h3{font-size:30px}
+  .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+  .frame.mobile .pgrid{grid-template-columns:1fr;gap:14px}
+  .pcard{border:1px solid var(--border);border-radius:24px;padding:24px;display:flex;flex-direction:column;gap:14px;align-items:center;text-align:center;position:relative}
+  .pcard.sel{border-color:var(--brand);box-shadow:0 0 0 3px var(--brand-subtle)}
+  .pcard .tag{font-size:14px}
+  .pcard .price{font-size:32px;font-weight:500;letter-spacing:-.5px}
+  .pcard .price small{font-size:16px;color:var(--text-subtle);font-weight:400}
+  .pcard .strike{color:var(--text-muted);text-decoration:line-through;font-size:16px}
+  .pcard .desc{color:var(--text-subtle);font-size:15px}
+  .pcard .sep{width:100%;border-top:1px dashed var(--border)}
+  .pcard ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;width:100%;text-align:left;font-size:14px}
+  .pcard li{display:flex;gap:10px;align-items:flex-start}
+  .pcard li i{width:22px;height:22px;border-radius:50%;background:var(--success-subtle);color:var(--success);display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;font-style:normal}
+  .pcard .badge{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--brand);color:#fff;font-size:11px;padding:3px 10px;border-radius:100px;font-weight:500;letter-spacing:.04em}
+  .continuity{display:flex;gap:12px;align-items:center;border:1px solid var(--brand);background:#f5f7ff;border-radius:14px;padding:12px 14px;font-size:14px;color:var(--brand-deep)}
+  .continuity .mark{width:36px;height:36px;border-radius:9px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:20px;flex-shrink:0}
+
+  /* ================= teaser shell (mirrors labs StepShell) ================= */
+  .shell{flex:1;display:flex;flex-direction:column;background:var(--canvas)}
+  .rail{display:flex;align-items:center;gap:14px;padding:14px 24px 0;max-width:720px;width:100%;margin:0 auto}
+  .frame.mobile .rail{padding:10px 16px 0}
+  .rail .exit{font-size:13px;color:var(--text-subtle);background:none;border:0;padding:4px 0;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+  .rail .dots{display:flex;gap:6px;flex:1}
+  .rail .dots i{height:4px;flex:1;border-radius:4px;background:var(--border)}
+  .rail .dots i.on{background:var(--brand)}
+  .rail .time{font-size:12px;color:var(--text-muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .col{max-width:720px;width:100%;margin:0 auto;padding:22px 24px 40px;display:flex;flex-direction:column;gap:18px;flex:1}
+  .frame.mobile .col{padding:16px 16px 32px;gap:14px}
+  .eyebrow{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-muted);font-weight:500}
+  h2.display{font-family:var(--serif);font-weight:400;font-size:40px;line-height:1.06;letter-spacing:-.5px;margin:0;text-wrap:balance}
+  .frame.mobile h2.display{font-size:32px}
+  h3.title{font-size:20px;font-weight:500;letter-spacing:-.3px;margin:0;line-height:1.3}
+  .body{font-size:16px;color:var(--text-subtle);max-width:62ch}
+  .sell{font-family:var(--serif);font-size:22px;line-height:1.25;color:var(--text);padding:12px 16px;border-left:3px solid var(--brand);background:var(--brand-subtle);border-radius:0 12px 12px 0;max-width:62ch}
+  .sell em{font-style:italic;color:var(--brand)}
+  .stack{display:flex;flex-direction:column;gap:10px}
+  .push{margin-top:auto}
+  .company{display:flex;align-items:center;gap:12px}
+  .mark{width:44px;height:44px;border-radius:10px;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:24px}
+  .company .who{display:flex;flex-direction:column}
+  .company .who b{font-weight:500;font-size:15px}
+  .company .who span{font-size:12px;color:var(--text-muted)}
+  .path{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+  .path div{font-size:12px;line-height:1.25;color:var(--text-muted);border-top:3px solid var(--border);padding-top:6px}
+  .path div.now{border-top-color:var(--brand);color:var(--text);font-weight:500}
+  .frame.mobile .path{grid-template-columns:repeat(5,1fr);gap:4px}
+  .frame.mobile .path div{font-size:10px}
+
+  .deckwrap{position:relative;height:340px;display:flex;align-items:center;justify-content:center;touch-action:pan-y}
+  .card{position:absolute;width:100%;max-width:360px;height:310px;background:#fff;border:1px solid var(--border);border-radius:20px;padding:24px 22px;display:flex;flex-direction:column;justify-content:space-between;box-shadow:0 12px 28px -18px rgba(28,27,27,.45);user-select:none;transition:transform .28s cubic-bezier(.32,0,.67,0),opacity .28s}
+  .card.dragging{transition:none}
+  .card .glyph{font-size:44px;line-height:1}
+  .card .line{font-family:var(--serif);font-size:27px;line-height:1.15;letter-spacing:-.3px;text-wrap:balance}
+  .card .from{font-size:12px;color:var(--text-muted)}
+  .card .from b{color:var(--text-subtle);font-weight:500}
+  .card.d1{transform:translateY(8px) scale(.96);opacity:.7}
+  .card.d2{transform:translateY(16px) scale(.92);opacity:.4}
+  .stamp{position:absolute;top:18px;padding:5px 10px;border-radius:8px;font-weight:600;font-size:13px;letter-spacing:.08em;text-transform:uppercase;opacity:0;transform:scale(.8);transition:opacity .1s,transform .1s}
+  .stamp.yes{right:16px;border:2px solid var(--success);color:var(--success);background:var(--success-subtle);transform:rotate(8deg) scale(.8)}
+  .stamp.no{left:16px;border:2px solid var(--danger);color:var(--danger);background:var(--danger-subtle);transform:rotate(-8deg) scale(.8)}
+  .controls{display:flex;align-items:center;justify-content:center;gap:22px}
+  .round{width:56px;height:56px;border-radius:50%;border:2px solid var(--border);background:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:22px;transition:transform .15s,border-color .15s}
+  .round.no{color:var(--danger)}.round.no:hover{border-color:var(--danger)}
+  .round.yes{color:var(--success)}.round.yes:hover{border-color:var(--success)}
+  .counter{font-variant-numeric:tabular-nums;color:var(--text-muted);font-size:13px;min-width:44px;text-align:center}
+  .hint{text-align:center;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-muted)}
+  .hint .n{color:var(--danger)}.hint .y{color:var(--success)}
+
+  .table{border:1px solid var(--border);border-radius:12px;overflow:hidden;font-variant-numeric:tabular-nums;background:#fff;max-width:520px}
+  .table .hd,.table .row{display:grid;grid-template-columns:1.5fr 1fr 1fr;padding:9px 14px;font-size:14px}
+  .table .hd{background:var(--surface-subtle);color:var(--text-muted);font-size:12px;letter-spacing:.06em;text-transform:uppercase}
+  .table .row{border-top:1px solid var(--border)}
+  .table .row span:not(:first-child){text-align:right}
+  .table .row.em{font-weight:500}
+  .table .cap{padding:8px 14px;font-size:11px;color:var(--text-muted);border-top:1px solid var(--border);background:var(--surface-subtle)}
+  .picks{display:flex;flex-direction:column;gap:8px;max-width:620px}
+  .pick{text-align:left;border:1px solid var(--border);background:#fff;border-radius:12px;padding:12px 14px;font-size:15px;line-height:1.35;display:flex;gap:10px;align-items:flex-start}
+  .pick .k{width:22px;height:22px;border-radius:50%;border:1px solid var(--border-strong);display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;color:var(--text-muted)}
+  .pick:hover{border-color:var(--brand)}
+  .pick.right{border-color:var(--success);background:var(--success-subtle)}
+  .pick.right .k{background:var(--success);border-color:var(--success);color:#fff}
+  .pick.wrong{border-color:var(--danger);background:var(--danger-subtle)}
+  .pick[disabled]{cursor:default}
+  .verdict{border-radius:12px;padding:12px 14px;font-size:15px;display:none;max-width:620px}
+  .verdict.show{display:block}
+  .verdict.good{background:var(--success-subtle);color:#0b3d12}
+  .verdict.bad{background:var(--warning-subtle);color:#4c2a08}
+  .verdict b{font-weight:600}
+
+  .lean{display:flex;flex-direction:column;gap:8px;max-width:520px}
+  .lean .bar{height:10px;border-radius:10px;background:var(--border);overflow:hidden}
+  .lean .bar i{display:block;height:100%;background:var(--brand);width:0;transition:width .6s ease}
+  .lean .lbl{display:flex;justify-content:space-between;font-size:12px;color:var(--text-muted)}
+  .artifacts{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;max-width:620px}
+  .artifacts div{display:flex;gap:12px;align-items:center;padding:11px 14px;font-size:15px;border-top:1px solid var(--border)}
+  .artifacts div:first-child{border-top:0}
+  .artifacts .p{font-size:11px;color:var(--text-muted);min-width:22px;font-variant-numeric:tabular-nums}
+  .portfolio{display:flex;gap:12px;align-items:center;border:1px solid var(--border);border-radius:12px;padding:10px 14px;background:var(--surface-subtle);font-size:14px;color:var(--text-subtle);max-width:620px}
+  .portfolio .thumb{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,#1f3a8a,#6989ff);flex-shrink:0;position:relative}
+  .portfolio .thumb:after{content:"";position:absolute;inset:8px;border-radius:3px;background:rgba(255,255,255,.85)}
+  .cta-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;max-width:620px}
+  .frame.mobile .cta-row{flex-direction:column;align-items:stretch}
+
+  /* ================= notes ================= */
+  .notes{display:flex;flex-direction:column;gap:14px;position:sticky;top:16px}
+  @media (max-width:1100px){.notes{position:static}}
+  .note{background:#fff;border:1px solid #d9d4d3;border-radius:16px;padding:18px 20px;display:none;flex-direction:column;gap:12px}
+  .note.active{display:flex}
+  .note h4{font-family:var(--serif);font-weight:400;font-size:24px;margin:0;letter-spacing:-.3px}
+  .note h4 span{color:var(--text-muted);font-size:12px;font-family:var(--sans);display:block;letter-spacing:.12em;text-transform:uppercase;margin-bottom:4px}
+  .note .status{display:inline-block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:100px;font-weight:600;width:fit-content}
+  .status.today{background:var(--surface-subtle);color:var(--text-subtle)}
+  .status.newscr{background:var(--brand-subtle);color:var(--brand-deep)}
+  .status.touched{background:var(--warning-subtle);color:#4c2a08}
+  .note ul{margin:0;padding-left:18px;color:var(--text-subtle);font-size:14px;display:flex;flex-direction:column;gap:6px}
+  .note li b{color:var(--text);font-weight:500}
+  .events{border-top:1px dashed var(--border);padding-top:10px;display:flex;flex-direction:column;gap:6px}
+  .events code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;background:var(--surface-subtle);padding:3px 7px;border-radius:6px;color:var(--text-subtle);display:inline-block}
+  .approve{display:flex;gap:8px;flex-wrap:wrap;border-top:1px dashed var(--border);padding-top:10px}
+  .approve span{font-size:12px;color:var(--text-muted);width:100%}
+  .summary{background:#fff;border:1px solid #d9d4d3;border-radius:16px;padding:16px 20px;font-size:14px;color:var(--text-subtle);display:flex;flex-direction:column;gap:8px}
+  .summary b{color:var(--text);font-weight:500}
+  @media (prefers-reduced-motion:reduce){.card,.lean .bar i{transition:none}}
+</style>
+</head>
+<body>
+<div class="review">
+  <div class="mast">
+    <div>
+      <div class="kicker">Labs · Experiment 5 · design review v2</div>
+      <h1>Try one <em>before</em> you buy, on today's plans page</h1>
+    </div>
+    <p class="sub">Every screen a learner touches, rebuilt on top of what ships today. Screens marked TODAY are reproductions of the live page. Dashed outlines mark what's new. Switch Today / Proposed to see the diff, and Desktop / Mobile for both layouts.</p>
+  </div>
+
+  <!-- ================= FRAME COLUMN ================= -->
+  <div>
+    <div class="toolbar">
+      <div class="steps" id="steps">
+        <button data-go="wall" class="on"><span class="n">1</span>Plans page</button>
+        <button data-go="learn"><span class="n">2</span>Learn more</button>
+        <button data-go="brief"><span class="n">3</span>Teaser · brief</button>
+        <button data-go="swipe"><span class="n">4</span>Teaser · swipes</button>
+        <button data-go="call"><span class="n">5</span>Teaser · the call</button>
+        <button data-go="payoff"><span class="n">6</span>Teaser · payoff</button>
+        <button data-go="plan"><span class="n">7</span>Plan picker</button>
+      </div>
+      <div class="seg" id="mode"><button data-mode="proposed" class="on">Proposed</button><button data-mode="today">Today</button></div>
+      <div class="seg" id="device"><button data-device="desktop" class="on">Desktop</button><button data-device="mobile">Mobile</button></div>
+      <div class="seg" id="doorstyle"><button data-door="row" class="on">Door: row under actions</button><button data-door="inline">Door: inline link</button></div>
+      <label class="legend"><input type="checkbox" id="markNew" checked style="margin:0 6px 0 0"><i></i>outline what's new</label>
+    </div>
+
+    <div class="frame hl" id="frame">
+      <div class="appbar"><button class="iconbtn" aria-label="Home">⌂</button><span class="logo">ext<b>e</b>rn</span><button class="iconbtn" aria-label="Menu">≡</button></div>
+      <div class="viewport">
+
+        <!-- 1 · PLANS PAGE -->
+        <section class="screen active" data-screen="wall">
+          <div class="plans">
+            <div class="plans-head"><h2>Your top recommendations</h2><p>Showing 3 of 20+ projects matched to your interests</p></div>
+            <div class="cards">
+              <article class="rcard">
+                <div class="img">▨<span class="co">Attronica</span></div>
+                <div class="body">
+                  <h3>Attronica Financial Planning &amp; Analysis and Private Company Valuation Externship</h3>
+                  <div class="focus"><span>Key focus areas</span><b>FP&amp;A, Valuation, DCF</b></div>
+                  <div class="actions"><button class="btn btn-quiet" type="button" data-go="learn">Learn more</button><button class="inline-door new" type="button" data-go="brief"><span class="ic">▶</span>Try it first · 2 min</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
+                  <button class="door new" type="button" data-go="brief"><span class="ic">▶</span><span class="t"><b>Try it first · 2 min</b></span><span class="arrow">→</span></button>
+                </div>
+              </article>
+              <article class="rcard">
+                <div class="img">▨<span class="co">Yinan</span></div>
+                <div class="body">
+                  <h3>Yinan Value Investing &amp; Financial Modeling Externship</h3>
+                  <div class="focus"><span>Key focus areas</span><b>Modeling, Investing</b></div>
+                  <div class="actions"><button class="btn btn-quiet" type="button">Learn more</button><button class="inline-door new" type="button" disabled style="opacity:.45"><span class="ic">▶</span>Try it first · 2 min</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
+                  <button class="door new quiet" type="button" disabled><span class="ic">▶</span><span class="t"><b>Try it first · 2 min</b></span><span class="arrow">→</span></button>
+                </div>
+              </article>
+              <article class="rcard">
+                <div class="img">▨<span class="co">Mangusta Capital</span></div>
+                <div class="body">
+                  <h3>Mangusta Capital Deal Sourcing &amp; Startup Analysis Externship</h3>
+                  <div class="focus"><span>Key focus areas</span><b>Venture, Analysis</b></div>
+                  <div class="actions"><button class="btn btn-quiet" type="button">Learn more</button><button class="inline-door new" type="button" disabled style="opacity:.45"><span class="ic">▶</span>Try it first · 2 min</button><button class="btn btn-outline" type="button" data-go="plan">Start now</button></div>
+                  <button class="door new quiet" type="button" disabled><span class="ic">▶</span><span class="t"><b>Try it first · 2 min</b></span><span class="arrow">→</span></button>
+                </div>
+              </article>
+            </div>
+            <button class="browse" type="button">Browse all Projects</button>
+          </div>
+          <div class="trialbar"><div class="who"><span class="avatars"><i></i><i></i><i></i></span><span><b>3/4</b> of externs <b>find a job outcome</b> within 1 year</span></div><button class="btn btn-primary" type="button" data-go="plan">Start $0 trial</button></div>
+        </section>
+
+        <!-- 2 · LEARN MORE (today) -->
+        <section class="screen" data-screen="learn">
+          <div class="plans" aria-hidden="true" style="filter:blur(4px);opacity:.6;pointer-events:none">
+            <div class="plans-head"><h2>Your top recommendations</h2><p>Showing 3 of 20+ projects matched to your interests</p></div>
+          </div>
+          <div class="scrim">
+            <div class="modal">
+              <div class="mh"><div class="co"></div><h3>Attronica Financial Planning &amp; Analysis and Private Company Valuation Externship</h3><button class="x" type="button" data-go="wall">✕</button></div>
+              <p class="body">Diagnose a real private company's financial health, project the AV division five years out, value it with a DCF and comps, and make the case to a buyer.</p>
+              <div class="hero"></div>
+              <h4>What you will learn and accomplish</h4>
+              <div class="learn">
+                <div class="row"><span class="n">1</span><div><b>Diagnose financial health</b><span>Read the three statements and calculate the 8 ratios FP&amp;A analysts use.</span></div></div>
+                <div class="row"><span class="n">2</span><div><b>Build a five-year projection</b><span>Project the AV division and defend it under stress-test.</span></div></div>
+                <div class="row"><span class="n">3</span><div><b>Value the division</b><span>DCF plus a comparable-companies cross-check.</span></div></div>
+              </div>
+              <div class="foot">
+                <button class="btn btn-outline btn-block" type="button" data-go="plan">Start now</button>
+                <button class="btn btn-quiet btn-block new" type="button" data-go="brief" style="color:var(--brand)">Try it first · 2 min →</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 3 · BRIEF -->
+        <section class="screen" data-screen="brief">
+          <div class="shell">
+            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i></i><i></i><i></i></div><span class="time">~2 min</span></div>
+            <div class="col">
+              <div class="company"><div class="mark">A</div><div class="who"><b>Attronica</b><span>Financial Planning &amp; Analysis · Project 1 of 5</span></div></div>
+              <h2 class="display">Priya runs the engagement. Here's your first day.</h2>
+              <p class="body">Attronica is a real private company that opened its books to Extern. Your first job: diagnose its financial health from three statements and tell Priya, in writing, what the numbers say is wrong.</p>
+              <div class="path"><div class="now">Diagnose its financial health</div><div>Customer, cost &amp; cash story</div><div>Project the AV division</div><div>Value it: DCF &amp; comps</div><div>Make the case to a buyer</div></div>
+              <p class="sell">This is the actual brief. Not a course about FP&amp;A. <em>The job.</em></p>
+              <div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" data-go="swipe">Show me the work →</button><button class="btn btn-quiet" type="button" data-go="wall">Not now</button></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 4 · SWIPES -->
+        <section class="screen" data-screen="swipe">
+          <div class="shell">
+            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i></i><i></i></div><span class="time">~1½ min</span></div>
+            <div class="col">
+              <div class="stack" style="gap:4px"><span class="eyebrow">Attronica · four moments from the project</span><h3 class="title">Would you want to do this?</h3></div>
+              <div class="deckwrap" id="deck"></div>
+              <div class="hint"><span class="n">← no</span> &nbsp;·&nbsp; <span class="y">yes →</span></div>
+              <div class="controls"><button class="round no" type="button" id="btnNo" aria-label="Not for me">✕</button><span class="counter" id="counter">0 / 4</span><button class="round yes" type="button" id="btnYes" aria-label="I'd want this">✓</button></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 5 · THE CALL -->
+        <section class="screen" data-screen="call">
+          <div class="shell">
+            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i></i></div><span class="time">~1 min</span></div>
+            <div class="col">
+              <div class="stack" style="gap:4px"><span class="eyebrow">Step 2 · Understand what the numbers are telling you</span><h3 class="title">In the project you calculate the 8 ratios on Attronica's statements. Here's one, on the program's worked example.</h3></div>
+              <div class="table"><div class="hd"><span>IES · reference company</span><span>FY1</span><span>FY2</span></div><div class="row"><span>Revenue</span><span>$12.0M</span><span>$14.4M</span></div><div class="row"><span>Gross profit</span><span>$4.6M</span><span>$4.9M</span></div><div class="row em"><span>Gross margin</span><span>38%</span><span>34%</span></div><div class="cap">Practice numbers from the program's worked example, not Attronica's.</div></div>
+              <p class="body">Revenue grew 20%. Gross margin fell four points. What's the FP&amp;A read?</p>
+              <div class="picks" id="picks">
+                <button class="pick" type="button" data-right="1"><span class="k">A</span><span>Cost creep or pricing pressure. Dig into COGS before anyone celebrates the growth.</span></button>
+                <button class="pick" type="button"><span class="k">B</span><span>Growth is healthy. Margin will recover with scale, no action needed.</span></button>
+                <button class="pick" type="button"><span class="k">C</span><span>Cut headcount to protect the bottom line.</span></button>
+              </div>
+              <div class="verdict good" id="vGood"><b>That's the read.</b> In Project 1 you do this on Attronica's real statements, eight ratios, and write it up for Priya.</div>
+              <div class="verdict bad" id="vBad"><b>Not quite.</b> Growing revenue with a falling margin means each sale earns less. The first question is why, and the answer is in cost of goods.</div>
+              <div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" id="toPayoff" data-go="payoff" disabled>See what you'd walk away with →</button></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 6 · PAYOFF -->
+        <section class="screen" data-screen="payoff">
+          <div class="shell">
+            <div class="rail"><button class="exit" type="button" data-go="wall">← Back to projects</button><div class="dots"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i></div><span class="time">done</span></div>
+            <div class="col">
+              <h2 class="display" id="payoffHead">You said yes to 3 of 4 days.</h2>
+              <div class="lean"><div class="bar"><i id="leanBar"></i></div><div class="lbl"><span id="leanText">Three of the four moments pulled you in</span><span>Attronica · Project 1</span></div></div>
+              <div class="stack" style="gap:8px"><span class="eyebrow">What you'd walk away with</span>
+                <div class="artifacts"><div><span class="p">P1</span><span>An FP&amp;A diagnostic of a real company, written for its finance lead</span></div><div><span class="p">P3</span><span>A five-year projection you defended under stress-test</span></div><div><span class="p">P4</span><span>A DCF and a comps cross-check</span></div><div><span class="p">P5</span><span>A four-page recommendation to a buyer</span></div></div>
+                <div class="portfolio"><div class="thumb"></div><span>All four land on your portfolio page, with Attronica's name on them.</span></div>
+              </div>
+              <div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" data-go="plan">Start your $0 trial with Attronica →</button><button class="btn btn-quiet" type="button" data-go="wall">See other projects</button></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 7 · PLAN PICKER (today's modal) -->
+        <section class="screen" data-screen="plan">
+          <div class="plans" aria-hidden="true" style="filter:blur(4px);opacity:.6;pointer-events:none">
+            <div class="plans-head"><h2>Your top recommendations</h2><p>Showing 3 of 20+ projects matched to your interests</p></div>
+          </div>
+          <div class="scrim">
+            <div class="modal wide">
+              <div style="display:flex;justify-content:flex-end"><button class="x" type="button" data-go="wall">✕</button></div>
+              <div class="plans-modal-head"><h3>Choose a plan &amp; start your $0 trial</h3><p>You won't be charged today &nbsp;•&nbsp; All plans can be cancelled anytime</p></div>
+              <div class="continuity new"><div class="mark">A</div><span><b>Attronica</b> is set as your first project. Your trial starts there the moment you pick a plan.</span></div>
+              <div class="pgrid">
+                <div class="pcard sel"><span class="tag">🗓️ Monthly Plan</span><div class="price">$20<small>/month</small></div><p class="desc">Full access, cancel anytime</p><div class="sep"></div><button class="btn btn-primary btn-block" type="button">Start $0 trial</button><ul><li><i>✓</i>Every externship, every project</li><li><i>✓</i>Portfolio with your name on it</li><li><i>✓</i>Certificate on completion</li></ul></div>
+                <div class="pcard"><span class="badge">Most popular</span><span class="tag">📆 4-Month Plan</span><div class="price">$15<small>/month</small></div><span class="strike">$20/month</span><p class="desc">Billed $60 every 4 months</p><div class="sep"></div><button class="btn btn-outline btn-block" type="button">Start $0 trial</button><ul><li><i>✓</i>Everything in Monthly</li><li><i>✓</i>Save 25%</li><li><i>✓</i>Time to finish two externships</li></ul></div>
+                <div class="pcard"><span class="tag">⭐ Annual Plan</span><div class="price">$10<small>/month</small></div><span class="strike">$20/month</span><p class="desc">Billed $120 once a year</p><div class="sep"></div><button class="btn btn-outline btn-block" type="button">Start $0 trial</button><ul><li><i>✓</i>Everything in Monthly</li><li><i>✓</i>Save 50%</li><li><i>✓</i>A full year of building</li></ul></div>
+              </div>
+              <p style="font-size:12px;color:var(--text-muted);text-align:center">Prices and bullets here are placeholders for review. The modal itself is untouched by this experiment; only the strip above is new.</p>
+            </div>
+          </div>
+        </section>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= NOTES ================= -->
+  <aside class="notes">
+    <div class="summary"><b>What changes vs. today, in total</b><span>1. A door under each recommendation card (and a quiet line in the Learn more modal).</span><span>2. The 2-minute teaser itself, four screens.</span><span>3. One strip on the plan picker naming the externship.</span><span>Everything else on this page is exactly what ships today. Exp 3's pre-paywall door comes down when this goes live.</span></div>
+
+    <div class="note active" data-note="wall">
+      <h4><span>Screen 1</span>The plans page</h4><span class="status touched">Today's page + one door per card</span>
+      <ul>
+        <li><b>Reproduced from the live page:</b> italic serif title, "Showing 3 of 20+", three cards with image, title, key focus areas, Learn more (text) and Start now (outline pill), Browse all Projects, and the sticky "3/4 of externs" trial bar.</li>
+        <li><b>The door lives inside the card, below the actions,</b> separated by a dashed rule. Same visual weight as "Learn more", so it reads as a second way to learn, not a third CTA.</li>
+        <li><b>Nothing above it moves.</b> Start now and the trial bar are where they are today. A decided student never meets the teaser. That is the guardrail, visible.</li>
+        <li>Cards without a hand-authored teaser get the generic track version. Prototype wires Attronica only.</li>
+      </ul>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_eligibility_resolved</code><code>trial_wall_teaser_door_shown {externship_id, matched}</code><code>trial_wall_teaser_door_clicked</code></div>
+    </div>
+
+    <div class="note" data-note="learn">
+      <h4><span>Screen 2</span>Learn more</h4><span class="status touched">Today's modal + one quiet line</span>
+      <ul>
+        <li><b>Reproduced from the live modal:</b> logo, title, overview, image, "What you will learn and accomplish" numbered list, outline Start now.</li>
+        <li><b>One addition:</b> "Try it first · 2 min" under Start now, text-weight, brand blue. A reader who opened the preview is already curious; this is the cheapest place to catch them.</li>
+        <li>Optional. If you'd rather keep the modal untouched, the card door alone is the entry.</li>
+      </ul>
+      <div class="events"><span class="eyebrow">Events</span><code>payment_recommendations_learn_more_viewed (existing)</code><code>trial_wall_teaser_door_clicked {from: learn_more}</code></div>
+    </div>
+
+    <div class="note" data-note="brief">
+      <h4><span>Screen 3 · ~20s</span>The brief</h4><span class="status newscr">New screen</span>
+      <ul>
+        <li><b>Same shell as the live Labs sprint:</b> centered column, progress rail, "Back to projects" top-left. Familiar to anyone who saw Exp 3, cheap to build.</li>
+        <li><b>Priya is real</b> ("Priya Tells You About the Engagement" is substep 1). Naming her turns a syllabus into a job.</li>
+        <li><b>The five-project path</b> is the real module list with Project 1 lit. Length and destination in one glance.</li>
+        <li>One selling line per screen, in the serif with a brand rule. "Not now" sits next to the primary so leaving is never a hunt.</li>
+      </ul>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_step_viewed {step: brief}</code></div>
+    </div>
+
+    <div class="note" data-note="swipe">
+      <h4><span>Screen 4 · ~45s</span>Four swipes</h4><span class="status newscr">New screen</span>
+      <ul>
+        <li><b>The lab's own deck,</b> four cards instead of eight. Every card is a real moment: the NDA, the 8 ratios, the FP&amp;A write-up, Derek's stress-test. Each names its step.</li>
+        <li>Drag or tap. One answer per card, enforced (the double-tap bug from the engine is fixed).</li>
+        <li>The lean feeds the payoff headline, so the screen after this feels earned.</li>
+      </ul>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_step_viewed {step: swipe}</code><code>trial_wall_teaser_card_answered {card, direction}</code></div>
+    </div>
+
+    <div class="note" data-note="call">
+      <h4><span>Screen 5 · ~40s</span>One real call</h4><span class="status newscr">New screen</span>
+      <ul>
+        <li><b>The actual peek.</b> Step 2 of Project 1 is "Calculate the 8 Ratios". One ratio, graded instantly, and the feedback says the real thing is this on Attronica's statements.</li>
+        <li><b>Numbers labelled as the program's worked example,</b> never Attronica's private figures. Final values come from the IES reference company in the curriculum.</li>
+        <li>Wrong answers teach, and the button unlocks either way. A miss at a paywall must not be a dead end.</li>
+      </ul>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_step_viewed {step: call}</code><code>trial_wall_teaser_call_answered {correct}</code></div>
+    </div>
+
+    <div class="note" data-note="payoff">
+      <h4><span>Screen 6 · ~15s</span>The payoff</h4><span class="status newscr">New screen</span>
+      <ul>
+        <li><b>Opens with their lean,</b> then pivots to the four deliverables tagged by project, and where they land: the portfolio, with Attronica's name on it. "What do I get", shown.</li>
+        <li><b>One primary button named after the externship,</b> in the trial bar's own words: "Start your $0 trial with Attronica". It opens today's plan picker with Attronica preselected.</li>
+        <li>"See other projects" is quiet and always there.</li>
+      </ul>
+      <div class="events"><span class="eyebrow">Events</span><code>trial_wall_teaser_completed</code><code>trial_wall_teaser_trial_cta_clicked</code></div>
+    </div>
+
+    <div class="note" data-note="plan">
+      <h4><span>Screen 7</span>The plan picker</h4><span class="status touched">Today's modal + one strip</span>
+      <ul>
+        <li><b>Reproduced from the live modal:</b> "Choose a plan &amp; start your $0 trial", the two reassurance lines, three plan cards. Plan prices and bullets are placeholders; the modal is not part of the experiment.</li>
+        <li><b>One strip:</b> "Attronica is set as your first project." That preselection already exists in the code (QA-459); this makes it visible so trying flows into starting without a seam.</li>
+        <li><b>Primary metric</b> is who clears this modal. <b>Guardrail:</b> Start now clicks straight from the wall must not drop.</li>
+      </ul>
+      <div class="events"><span class="eyebrow">Events</span><code>existing plan-picker and checkout events, split by arm</code></div>
+    </div>
+  </aside>
+</div>
+
+<script>
+(function(){
+  var frame=document.getElementById('frame');
+  var screens={};document.querySelectorAll('.screen').forEach(function(s){screens[s.dataset.screen]=s});
+  var notes={};document.querySelectorAll('.note').forEach(function(n){notes[n.dataset.note]=n});
+  var stepBtns=document.querySelectorAll('#steps button');
+
+  function go(name){
+    Object.keys(screens).forEach(function(k){screens[k].classList.toggle('active',k===name)});
+    Object.keys(notes).forEach(function(k){notes[k].classList.toggle('active',k===name)});
+    stepBtns.forEach(function(b){b.classList.toggle('on',b.dataset.go===name)});
+    screens[name].scrollTop=0;
+    if(name==='swipe'&&!deckBuilt) buildDeck();
+    if(name==='payoff') renderPayoff();
+    if(name==='wall') resetAll();
+  }
+  document.addEventListener('click',function(e){
+    var t=e.target.closest('[data-go]'); if(!t||t.disabled) return; go(t.dataset.go);
+  });
+  document.querySelectorAll('#mode button').forEach(function(b){b.addEventListener('click',function(){
+    document.querySelectorAll('#mode button').forEach(function(x){x.classList.toggle('on',x===b)});
+    frame.classList.toggle('today',b.dataset.mode==='today');
+  })});
+  document.querySelectorAll('#device button').forEach(function(b){b.addEventListener('click',function(){
+    document.querySelectorAll('#device button').forEach(function(x){x.classList.toggle('on',x===b)});
+    frame.classList.toggle('mobile',b.dataset.device==='mobile');
+  })});
+  document.querySelectorAll('#doorstyle button').forEach(function(b){b.addEventListener('click',function(){document.querySelectorAll('#doorstyle button').forEach(function(x){x.classList.toggle('on',x===b)});frame.classList.toggle('door-inline',b.dataset.door==='inline');})});
+  document.getElementById('markNew').addEventListener('change',function(e){frame.classList.toggle('hl',e.target.checked)});
+
+  var CARDS=[
+    {g:'🧾',line:"Sign the NDA and open Attronica's real income statement, balance sheet and cash flow.",from:'Project 1 · Step 1'},
+    {g:'📐',line:'Calculate the 8 ratios FP&A analysts actually use, on Attronica’s numbers, with Claude as your partner.',from:'Project 1 · Step 2'},
+    {g:'✍️',line:"Write the FP&A read: what's wrong, and what you'd tell the CFO to do about it.",from:'Project 1 · Step 3'},
+    {g:'🛡️',line:'Build a five-year projection for the AV division and defend it to Derek, who stress-tests growth plans for a living.',from:'Project 3 · Step 4'}
+  ];
+  var deck=document.getElementById('deck'), counter=document.getElementById('counter');
+  var cursor=0, answers=[], deckBuilt=false, busy=false;
+  function buildDeck(){ deckBuilt=true; deck.innerHTML=''; cursor=0; answers=[]; busy=false; counter.textContent='0 / 4';
+    for(var i=CARDS.length-1;i>=0;i--){ deck.appendChild(makeCard(CARDS[i],i)); } layout(); }
+  function makeCard(c,i){ var el=document.createElement('div'); el.className='card'; el.dataset.i=i;
+    el.innerHTML='<div class="stamp yes">Yes</div><div class="stamp no">Pass</div><div class="glyph">'+c.g+'</div><div class="line">'+c.line+'</div><div class="from">From <b>'+c.from+'</b> of the real curriculum</div>'; return el; }
+  function layout(){ deck.querySelectorAll('.card').forEach(function(el){ var i=+el.dataset.i, depth=i-cursor; el.classList.remove('d1','d2'); if(depth<0) return;
+    if(depth===0){ el.style.zIndex=30; attachDrag(el); } else if(depth===1){ el.classList.add('d1'); el.style.zIndex=20; } else { el.classList.add('d2'); el.style.zIndex=10; } }); }
+  function resolve(dir){ if(busy) return; var el=deck.querySelector('.card[data-i="'+cursor+'"]'); if(!el) return; busy=true; answers[cursor]=dir; el.classList.remove('dragging');
+    el.style.transform='translateX('+(dir==='right'?600:-600)+'px) rotate('+(dir==='right'?18:-18)+'deg)'; el.style.opacity='0';
+    el.querySelector('.stamp.'+(dir==='right'?'yes':'no')).style.opacity='1'; cursor++; counter.textContent=Math.min(cursor,4)+' / 4';
+    setTimeout(function(){ el.remove(); busy=false; layout(); if(cursor>=CARDS.length){ setTimeout(function(){go('call')},250); } },290); }
+  document.getElementById('btnYes').addEventListener('click',function(){resolve('right')});
+  document.getElementById('btnNo').addEventListener('click',function(){resolve('left')});
+  function attachDrag(el){ if(el.dataset.drag) return; el.dataset.drag='1'; var sx=0,dx=0,down=false; var yes=el.querySelector('.stamp.yes'), no=el.querySelector('.stamp.no');
+    el.addEventListener('pointerdown',function(e){ if(busy) return; down=true; sx=e.clientX; dx=0; el.classList.add('dragging'); el.setPointerCapture(e.pointerId); });
+    el.addEventListener('pointermove',function(e){ if(!down) return; dx=e.clientX-sx; el.style.transform='translateX('+dx+'px) rotate('+(dx/18)+'deg)'; var p=Math.min(1,Math.abs(dx)/120); yes.style.opacity=dx>10?p:0; no.style.opacity=dx<-10?p:0; yes.style.transform='rotate(8deg) scale('+(0.8+0.2*p)+')'; no.style.transform='rotate(-8deg) scale('+(0.8+0.2*p)+')'; });
+    function end(){ if(!down) return; down=false; el.classList.remove('dragging'); if(dx>100) resolve('right'); else if(dx<-100) resolve('left'); else { el.style.transform=''; yes.style.opacity=0; no.style.opacity=0; } }
+    el.addEventListener('pointerup',end); el.addEventListener('pointercancel',end); }
+
+  var picks=document.querySelectorAll('#picks .pick'), vGood=document.getElementById('vGood'), vBad=document.getElementById('vBad'), toPayoff=document.getElementById('toPayoff');
+  picks.forEach(function(p){ p.addEventListener('click',function(){ picks.forEach(function(q){ q.disabled=true; });
+    if(p.dataset.right){ p.classList.add('right'); vGood.classList.add('show'); } else { p.classList.add('wrong'); vBad.classList.add('show'); picks.forEach(function(q){ if(q.dataset.right) q.classList.add('right'); }); }
+    toPayoff.disabled=false; }); });
+
+  function renderPayoff(){ var yes=answers.filter(function(a){return a==='right'}).length; var words=['none','one','two','three','four'];
+    document.getElementById('payoffHead').textContent= yes===0 ? "Not one of those days pulled you in." : 'You said yes to '+yes+' of 4 days.';
+    document.getElementById('leanText').textContent= yes===0 ? 'Fair enough. Here is what the work leads to anyway.' : (yes===4 ? 'Every moment pulled you in' : words[yes].charAt(0).toUpperCase()+words[yes].slice(1)+' of the four moments pulled you in');
+    var bar=document.getElementById('leanBar'); bar.style.width='0'; requestAnimationFrame(function(){ setTimeout(function(){ bar.style.width=(yes/4*100)+'%'; },30); }); }
+  function resetAll(){ deckBuilt=false; cursor=0; answers=[]; busy=false; picks.forEach(function(q){ q.disabled=false; q.classList.remove('right','wrong'); }); vGood.classList.remove('show'); vBad.classList.remove('show'); toPayoff.disabled=true; }
+})();
+</script>
+</body>
+</html>
