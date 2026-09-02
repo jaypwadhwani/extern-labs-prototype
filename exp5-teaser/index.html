@@ -367,6 +367,27 @@
   .ctabox span{font-size:12px;color:var(--text-subtle)}
   .leanwrap.compact{padding-top:0;max-width:620px}
   .runner b{font-weight:600;color:var(--text)}
+
+  /* ================= v3.2 payoff proof ================= */
+  .ctabox.big .btn{height:58px;font-size:17px;box-shadow:0 10px 24px -12px rgba(40,83,210,.7)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:620px}
+  .frame.mobile .stats{grid-template-columns:1fr 1fr}
+  .stat{border:1px solid var(--border);border-radius:14px;background:#fff;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+  .stat b{font-family:var(--serif);font-size:26px;line-height:1;font-weight:400;color:var(--brand)}
+  .stat span{font-size:12.5px;color:var(--text-subtle);line-height:1.35}
+  .testis{display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:620px}
+  .frame.mobile .testis{grid-template-columns:1fr}
+  .testi{margin:0;border:1px solid var(--border);border-radius:14px;background:#fff;padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+  .testi blockquote{margin:0;font-family:var(--serif);font-size:18px;line-height:1.3;color:var(--text)}
+  .testi figcaption{display:flex;flex-direction:column;font-size:12px;color:var(--text-muted)}
+  .testi figcaption b{font-weight:600;color:var(--text);font-size:13px}
+  .stickycta{position:sticky;bottom:0;margin:0 -24px -40px;padding:10px 24px 14px;background:rgba(253,248,248,.92);backdrop-filter:blur(8px);border-top:1px solid var(--border)}
+  .frame.mobile .stickycta{margin:0 -16px -32px;padding:10px 16px 14px}
+  .stickycta .in{max-width:620px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .stickycta .lbl{font-size:14px;color:var(--text-subtle)}
+  .stickycta .lbl b{color:var(--text);font-weight:600}
+  .frame.mobile .stickycta .lbl{display:none}
+  .frame.mobile .stickycta .btn{width:100%}
 </style>
 </head>
 <body>
@@ -605,7 +626,7 @@
 (function(){
   /* ================= real content, lifted from extern-programs curricula ================= */
   var EX={
-    attronica:{key:'attronica',mark:'A',name:'Attronica',short:'Attronica',hook:'Value a real 40-year-old company for the founder who built it.',guide:'Priya, Senior Manager of FP&amp;A',
+    attronica:{key:'attronica',mark:'A',name:'Attronica',short:'Attronica',hook:'Value a real 40-year-old company for the founder who built it.',guide:'Priya, Senior Manager of FP&amp;A',weeks:8,enrolled:'900+',next:'Sep 7',testimonials:[{q:'Everyone wants you to have experience before you can even get an internship, and Extern was what helped me break through that barrier.',who:'Gevans Gabeau',role:'Incoming Investment Banking Analyst, Lazard'},{q:'Less than two months after my externship, I landed a junior year internship with Goldman Sachs.',who:'Bintou Majula Drammeh',role:'Summer Analyst, Goldman Sachs'}],
       title:'Attronica Financial Planning &amp; Analysis and Private Company Valuation Externship',focus:'FP&amp;A, Valuation, DCF',
       track:'Financial Planning &amp; Analysis · Project 1 of 5',
       learn:'Diagnose a real private company\'s financial health, project the AV division five years out, value it with a DCF and comps, and make the case to a buyer.',
@@ -627,7 +648,7 @@
       skills:['Reading real financial statements','Comparing a company to industry peers with ratios','Valuing a business with DCF and comps'],
       cliff:{q:'Can this business grow? What is it worth?',p:'Two questions on Niel\'s desk, still open. Project 1 opens the statements.'}
     },
-    yinan:{key:'yinan',mark:'Y',name:'Yinan Zhao',short:'Yinan',hook:'Find a mispriced stock Wall Street stopped covering, and prove it.',guide:'Yinan Zhao, senior research analyst',
+    yinan:{key:'yinan',mark:'Y',name:'Yinan Zhao',short:'Yinan',hook:'Find a mispriced stock Wall Street stopped covering, and prove it.',guide:'Yinan Zhao, senior research analyst',weeks:11,enrolled:'3,200+',next:null,testimonials:[{q:'I was able to have tangible experiences to touch upon in my interviews. I explained what I was working on and how it would impact my role in their firm, and they loved it.',who:'Alice Mollet',role:'Summer Analyst, HSBC'},{q:'Even two years after my externship, I was still bringing it up in job interviews.',who:'Anisya Nair',role:'Structured Finance Intern, EY'}],
       title:'Yinan Value Investing &amp; Financial Modeling Externship',focus:'Modeling, Investing',
       track:'Value Investing · Project 1 of 6',
       learn:'Pick a company from the Russell 2000 Value, read its 10-K, build the model, set a price target, and write the investment memo alongside a senior research analyst.',
@@ -649,7 +670,7 @@
       skills:['Targeted research on potential investments','DCF, comparable company and precedent transactions','Presenting an investment case persuasively'],
       cliff:{q:'Which of the 1,400 is mispriced right now?',p:'Your company is out there, thinly covered. Project 1 is where you pick it.'}
     },
-    mangusta:{key:'mangusta',mark:'M',name:'Mangusta Capital',short:'Mangusta',hook:'Source vertical AI startups against a real VC fund\'s thesis.',guide:'Natoli Farber, Principal',
+    mangusta:{key:'mangusta',mark:'M',name:'Mangusta Capital',short:'Mangusta',hook:'Source vertical AI startups against a real VC fund\'s thesis.',guide:'Natoli Farber, Principal',weeks:8,enrolled:'1,900+',next:'Sep 7',testimonials:[{q:'The company and I stayed in contact and I was later offered the opportunity to join the team and I took it.',who:'Devan Horn',role:'Venture Capital Analyst intern, Mangusta Capital'},{q:'The externship taught me a lot about Venture Capital and the process of selecting, doing due diligence, and creating an investment memo for a startup.',who:'Aman Bilodi',role:'GTM Intern, Acceldata'}],
       title:'Mangusta Capital Deal Sourcing &amp; Startup Analysis Externship',focus:'Venture, Analysis',
       track:'Venture Capital · Project 1 of 4',
       learn:'Join a new VC fund launched by a former SoftBank Vision Fund leader and backed by the Ray-Ban and Oakley family. Source vertical AI startups, run due diligence, and write the investment memo.',
@@ -794,19 +815,21 @@
   /* ================= screen 7 · payoff ================= */
   function renderPayoff(){ var col=document.getElementById('payCol'), x=shares(), L=leader(), R=runnerUp(), e=EX[L], nf=noFit();
     var pct=Math.round(x.s[L]*100);
-    var jobBox='<div class="box"><span class="eyebrow">Where it leads</span><div class="big"><b>3 in 4</b> externs find a job outcome within a year</div></div>';
+    var jobTile='<div class="stat"><b>3 in 4</b><span>externs find a job outcome within a year</span></div>';
     if(nf){
-      col.innerHTML='<div class="payhead"><h2 class="display">No clear match yet, and that is useful to know.</h2><p class="sub">None of the three pulled you in. There are 20+ projects on the catalog, and the questionnaire can be retaken.</p></div><div class="leanwrap show" data-lean></div><div class="proof"><div class="box"><span class="eyebrow">Every externship still gives you</span><ul><li>A real company, a real manager, real deliverables</li><li>On your portfolio, with the company\'s name on it</li></ul></div>'+jobBox+'</div><div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" data-go="wall">Browse the catalog →</button><button class="btn btn-quiet" type="button" data-go="plan" data-ex="'+L+'">Start with '+e.short+' anyway</button></div></div>';
+      col.innerHTML='<div class="payhead"><h2 class="display">No clear match yet, and that is useful to know.</h2><p class="sub">None of the three pulled you in. There are 20+ projects on the catalog, and the questionnaire can be retaken.</p></div><div class="leanwrap show" data-lean></div><div class="stats">'+jobTile+'<div class="stat"><b>20+</b><span>real projects with real companies on the catalog</span></div></div><div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" data-go="wall">Browse the catalog →</button><button class="btn btn-quiet" type="button" data-go="plan" data-ex="'+L+'">Start with '+e.short+' anyway</button></div></div>';
       renderLean(); return; }
     var verdict= closeRace() ? 'By a nose, '+pct+'% of your lean' : pct+'% of your lean';
     var head='<div class="result new"><div class="rhead"><span class="chip" data-ex="'+L+'">Your best match</span><span class="pct">'+verdict+'</span></div><div class="company big"><div class="mark" data-ex="'+L+'">'+e.mark+'</div><div class="who"><b>'+e.title+'</b><span>'+e.track.split(' · ')[0]+' · with '+e.guide+'</span></div></div><p class="body">'+e.learn+'</p><h4>What you will learn and accomplish</h4><div class="learn">'+e.learnRows.map(function(r,i){return '<div class="row"><span class="n">'+(i+1)+'</span><div><b>'+r[0]+'</b><span>'+r[1]+'</span></div></div>'}).join('')+'</div></div>';
-    var cta='<div class="ctabox new"><button class="btn btn-primary btn-block" type="button" data-go="plan" data-ex="'+L+'">Start your $0 trial with '+e.short+' →</button><span>You won\'t be charged today. Cancel anytime. '+e.short+' is set as your first project.</span></div>';
-    var lean='<div class="leanwrap show compact" data-lean></div>';
-    var proof='<div class="stack" style="gap:8px"><span class="eyebrow">What you\'d walk away with</span><div class="artifacts">'+e.artifacts.map(function(a){return '<div><span class="p">'+a[0]+'</span><span>'+a[1]+'</span></div>'}).join('')+'</div><div class="portfolio"><div class="thumb"></div><span>All of it lands on your portfolio page, with '+e.name+'\'s name on it.</span></div></div>'+
-      '<div class="proof"><div class="box"><span class="eyebrow">What a recruiter reads</span><ul>'+e.skills.map(function(k){return '<li>'+k+'</li>'}).join('')+'</ul></div>'+jobBox+'</div>';
+    var cta='<div class="ctabox big new"><button class="btn btn-primary btn-block" type="button" data-go="plan" data-ex="'+L+'">Start your $0 trial with '+e.short+' →</button><span>You won\'t be charged today. Cancel anytime. '+e.short+' is set as your first project.</span></div>';
+    var takes='<div class="stack" style="gap:8px"><span class="eyebrow">What it takes</span><div class="stats"><div class="stat"><b>'+e.weeks+' weeks</b><span>online and self-paced, built to fit around school and work</span></div><div class="stat"><b>'+(e.next?'Starts '+e.next:'Rolling start')+'</b><span>'+(e.next?'next cohort, with live sessions recorded if you miss one':'begin the day your trial starts')+'</span></div><div class="stat"><b>Real guide</b><span>'+e.guide+', plus an Extern program manager</span></div></div></div>';
+    var proof='<div class="stack" style="gap:8px"><span class="eyebrow">Who has done it</span><div class="stats"><div class="stat"><b>'+e.enrolled+'</b><span>externs enrolled with '+e.name+' in the last 12 months</span></div>'+jobTile+'</div><div class="testis">'+e.testimonials.map(function(t){return '<figure class="testi"><blockquote>“'+t.q+'”</blockquote><figcaption><b>'+t.who+'</b><span>'+t.role+'</span></figcaption></figure>'}).join('')+'</div></div>';
+    var walk='<div class="stack" style="gap:8px"><span class="eyebrow">What you\'d walk away with</span><div class="artifacts">'+e.artifacts.map(function(a){return '<div><span class="p">'+a[0]+'</span><span>'+a[1]+'</span></div>'}).join('')+'</div><div class="portfolio"><div class="thumb"></div><span>All of it lands on your portfolio page, with '+e.name+'\'s name on it.</span></div></div>';
     var cliff='<div class="cliff"><span class="eyebrow">Still open</span><div class="q">'+e.cliff.q+'</div><p>'+e.cliff.p+'</p></div>';
+    var lean='<div class="leanwrap show compact" data-lean></div>';
     var runner= R ? '<div class="runner"><span>Also a fit: <b>'+EX[R].short+'</b> at '+Math.round(x.s[R]*100)+'%.</span><button type="button" data-go="plan" data-ex="'+R+'">Start there instead</button></div>' : '';
-    col.innerHTML=head+cta+lean+proof+cliff+runner+'<div class="stack push"><div class="cta-row"><button class="btn btn-primary" type="button" data-go="plan" data-ex="'+L+'">Start your $0 trial with '+e.short+' →</button><button class="btn btn-quiet" type="button" data-go="wall">See other projects</button></div></div>';
+    var sticky='<div class="stickycta"><div class="in"><span class="lbl"><b>'+e.short+'</b> is your match</span><button class="btn btn-primary" type="button" data-go="plan" data-ex="'+L+'">Start your $0 trial →</button></div></div>';
+    col.innerHTML=head+cta+takes+proof+walk+cliff+lean+runner+'<div class="stack" style="padding-bottom:72px"><div class="cta-row"><button class="btn btn-quiet" type="button" data-go="wall">See other projects</button></div></div>'+sticky;
     renderLean(); }
 
   /* ================= screen 8 ================= */
