@@ -1,0 +1,64 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Recommendations Page Redesign</title>
+<style>
+body{margin:0;font-family:Inter,-apple-system,Helvetica,Arial,sans-serif;background:#fdf8f8;color:#1c1b1b}
+.wrap{max-width:1500px;margin:0 auto;padding:40px 24px 80px}
+h1{font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-weight:400;font-size:44px;margin:0 0 8px}
+.sub{color:#484646;font-size:16px;margin-bottom:32px;max-width:900px;line-height:24px}
+.board{display:grid;grid-template-columns:420px minmax(0,1fr);gap:28px;align-items:start;margin-bottom:56px;padding-top:32px;border-top:1px solid #e5e2e1}
+.note{position:sticky;top:24px;background:#fff;border:1px solid #c9c6c5;border-radius:20px;padding:22px 24px;font-size:14px;line-height:21px}
+.note h2{font-size:20px;margin:0 0 6px;line-height:26px}
+.score{display:inline-block;background:#dce1ff;color:#001d69;border-radius:100px;padding:4px 12px;font-weight:600;font-size:14px;margin:6px 0 12px}
+.score.low{background:#ffe8d1;color:#4c2a08}
+.crit{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin:12px 0}
+.crit div{background:#f4f0ef;border-radius:8px;padding:6px 4px;text-align:center;font-size:12px}
+.crit b{display:block;font-size:16px}
+img{width:100%;height:auto;display:block;border:1px solid #c9c6c5;border-radius:16px;background:#fff}
+.phone{max-width:390px}
+.rubric{background:#fff;border:1px solid #c9c6c5;border-radius:20px;padding:22px 24px;font-size:14px;line-height:22px;margin-bottom:8px}
+.rubric ol{margin:8px 0 0;padding-left:20px}
+a{color:#2853d2}
+</style>
+<style>.fb{background:#fff;border:1px solid #c9c6c5;border-radius:20px;padding:22px 24px;font-size:14px;line-height:22px;margin-bottom:8px} .fb ol,.fb ul{margin:8px 0 0;padding-left:20px} .board img{cursor:zoom-in}</style>
+</head><body><div class="wrap">
+<h1>Recommendations Page Redesign</h1>
+<div class="sub">Design review draft for the post-signup page (the trial wall). Built on Extern's real tokens and real curriculum content. Mockups, not final copy. Prepared by Jay with Claude, 3 Sep 2026.</div>
+
+<div class="rubric" style="border-color:#2853d2;background:#f5f7ff"><b>The flow, one job per screen</b>
+<ol>
+<li><b>Choose</b> (board 1, plus phone). The three cards stay. The questionnaire is reflected back as editable chips, one card is badged Best fit with the reason, and every card gets a Day 1 row, a completer count, and a commitment button ("See first week") instead of the paywall.</li>
+<li><b>Do</b> (board 2). The Best fit button opens a 90-second real call lifted from Day 1 of the externship, with a one-tap skip. Answer it, get the principle, move on.</li>
+<li><b>Commit</b> (board 3). The first-week plan: Day 1 narrated from the curriculum, four real Project 1 steps, the week-8 deliverable, and the trial button.</li>
+<li><b>Who you become</b> (board 4). The post-checkout success page: trial active, the resume as it reads eight weeks out with the week each line is earned, and one button, Begin Day 1.</li>
+</ol>
+A constant "$0 trial" state runs through every pre-checkout screen: the bottom bar names the selected project, and screens with a rail keep an in-context button too.</div>
+
+<div class="fb"><b>Feedback so far (Product Prioritization, 3 Sep)</b>
+<ul>
+<li>Too dense; easy to lose track of the next step. Content is not final, a design and copy pass is expected.</li>
+<li>Keep a constant "$0 trial" state on every pre-checkout screen. Applied: bottom bar restored on boards 2 and 3.</li>
+<li>One-screen checkout (appendix): separate the moment of selling from the moment of paying. Set aside; an express "buy it now" path is the variant worth testing later.</li>
+<li>Content source: the externship curricula, the same way Labs pulls it.</li>
+</ul>
+<b>What would help most from you:</b> what to cut to reduce density on boards 1 to 3; whether the progress stepper and the "Because you picked" chips earn their place; copy that reads as filler; where the next step is unclear; anything off-brand versus the live product.</div>
+
+<div class="rubric"><b>How each board was judged</b> (1 to 10 on seven criteria from an onboarding research pass; criteria 1 and 4 count double)
+<ol><li>Something happens within 60 seconds</li><li>Personalization is visible, not claimed</li><li>A clear default plus legible differences</li><li>Commitment before the wall; the CTA continues an intention</li><li>Proof next to the CTA, specific to the project</li><li>Honest: no overclaim, no confidential figures, works on a phone</li><li>Extern brand fidelity, buildable with existing components</li></ol>
+Real on every board: managers, Day 1 content, deliverables, skills, the job-outcome line already on the live page. Labeled estimates: about 3 hrs/week, the Day 1/3/5/7 pacing. Placeholders: the sample name, BeReal and Breaking Games card art.</div>
+
+<div class="board"><div class="note"><h2>0 · Today (baseline)</h2><span class="score low">4.9 / 10</span><div class="crit"><div><b>3</b>60s</div><div><b>3</b>person.</div><div><b>4</b>default</div><div><b>4</b>commit</div><div><b>5</b>proof</div><div><b>8</b>honest</div><div><b>10</b>brand</div></div>Reproduced from the live component for comparison. The page earns the click; it does not earn a commitment that survives the plan picker.</div><img src="shots/Today.png" alt="Today"></div>
+
+<div class="board"><div class="note"><h2>1 · Show your work (choose)</h2><span class="score">8.1 / 10</span><div class="crit"><div><b>7</b>60s</div><div><b>9</b>person.</div><div><b>9</b>default</div><div><b>8</b>commit</div><div><b>8</b>proof</div><div><b>8</b>honest</div><div><b>9</b>brand</div></div>Cards stay. The questionnaire is reflected back as editable chips; one card is Best fit with the reason; every card gets a Day 1 row, a completer count, hours and deliverable; the primary button is a commitment step, not the paywall. The 90-second call sits behind the Best fit button with a one-tap skip.<br><br>Research: Chernev on choice defaults, the PNAS defaults meta-analysis, Coursera's 2025 single top pick with a why, Airtable and Canva on visible personalization, Nunes and Dreze on endowed progress.</div><img src="shots/ShowYourWork.png" alt="Show your work"></div>
+
+<div class="board"><div class="note"><h2>1m · Show your work, phone</h2><span class="score">8.1 / 10</span><div class="crit"><div><b>7</b>60s</div><div><b>9</b>person.</div><div><b>9</b>default</div><div><b>8</b>commit</div><div><b>8</b>proof</div><div><b>8</b>honest</div><div><b>9</b>brand</div></div>Best fit first with the button; the other two collapse to rows; the sticky footer names the selected project. A large share of first-time viewers are on phones and convert below desktop.</div><img class="phone" src="shots/ShowYourWorkMobile.png" alt="Phone"></div>
+
+<div class="board"><div class="note"><h2>2 · Your first call (do)</h2><span class="score">8.6 / 10</span><div class="crit"><div><b>9</b>60s</div><div><b>8</b>person.</div><div><b>8</b>default</div><div><b>9</b>commit</div><div><b>8</b>proof</div><div><b>8</b>honest</div><div><b>9</b>brand</div></div>Step 1 of 2 behind the Best fit button, with a one-tap skip. Priya's brief in her own words from the curriculum, a chart with the shape and no figures (Attronica's numbers stay behind the paywall), one real analyst call lifted from the Day 1 First Principle. Answer, get the principle, then the button leads to the first week. Two states below: question, then payoff.<br><br>Research: Bolt, Lovable and Perplexity output-before-account; Wispr Flow's guaranteed-win task ladder; Codecademy 2011; Duolingo lesson-before-signup.</div><div><img src="shots/DoTask1.png" alt="First call, question" style="margin-bottom:20px"><img src="shots/DoTask1Payoff.png" alt="First call, payoff"></div></div>
+
+<div class="board"><div class="note"><h2>3 · Your first week (commit)</h2><span class="score">8.2 / 10</span><div class="crit"><div><b>7</b>60s</div><div><b>8</b>person.</div><div><b>8</b>default</div><div><b>9</b>commit</div><div><b>8</b>proof</div><div><b>9</b>honest</div><div><b>9</b>brand</div></div>Step 2 of 2. Commit to a project, not a subscription: Day 1 narrated straight from the curriculum, four rows of real Project 1 steps with honest times, the week-8 deliverable, the skills a recruiter reads, and the trial button in the rail and the bar.<br><br>Research: Headspace's paywall after the felt session, Coursera's enroll-triggered trial, Noom and Udacity on commitment before price.</div><img src="shots/FirstWeek.png" alt="First week"></div>
+
+<div class="board"><div class="note"><h2>4 · After checkout: who you become</h2><span class="score">8.1 / 10</span><div class="crit"><div><b>8</b>60s</div><div><b>9</b>person.</div><div><b>8</b>default</div><div><b>8</b>commit</div><div><b>8</b>proof</div><div><b>8</b>honest</div><div><b>8</b>brand</div></div>The post-checkout success page in place of today's blank one: trial active, the resume line and portfolio piece as they would read after the externship, each line tagged with the week it is earned, and one button, Begin Day 1. Every line is something Attronica externs actually do.<br><br>Research: Hulick's "better version of yourself", seeded empty states (Linear, Grammarly, Airtable).</div><img src="shots/WhoYouBecome.png" alt="After checkout"></div>
+
+<h2 style="font-family:'DM Serif Display',Georgia,serif;font-style:italic;font-weight:400;font-size:34px;margin:56px 0 0">Appendix: considered and set aside</h2>
+<div class="board"><div class="note"><h2>S1 · One screen, one default plan</h2><span class="score">8.2 / 10</span>Replaces the plan picker with an inline checkout in the first-week rail: wallets on top, card below, monthly pre-selected, the exact charge and date on the button screen. Set aside after today's feedback that selling and paying should be separate moments; an express "buy it now" path is the variant to explore instead.</div><img src="shots/Swing1OneScreen.png" alt="One screen checkout"></div>
+</div>
+<script>document.querySelectorAll('.board img').forEach(i=>i.addEventListener('click',()=>window.open(i.src,'_blank')));</script>
+</body></html>
